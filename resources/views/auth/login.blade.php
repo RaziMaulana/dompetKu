@@ -63,7 +63,7 @@
 
                 <!-- Google Button -->
                 <a href="{{ route('google.login') }}" class="btn btn-light w-100 rounded-pill google-btn">
-                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google" class="me-2">
+                    <img src="./Image/GoogleLogo.png" alt="Google" class="me-2">
                     {{ __('Masuk Dengan Google') }}
                 </a>
 
@@ -71,6 +71,45 @@
                     <span class="text-white-50">Belum memiliki akun? <a href="{{ route('register') }}" class="text-decoration-none text-primary">{{ __('Daftar Disini') }}</a></span>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Phone Number Modal -->
+    <div class="modal fade" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="phoneModalLabel">Lengkapi Data Anda</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Silakan masukkan nomor telepon Anda untuk melengkapi pendaftaran.</p>
+
+                    <form method="POST" action="{{ route('google.store.phone') }}" class="needs-validation" novalidate>
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Nomor Telepon</label>
+                            <input
+                                type="text"
+                                class="form-control border-0 rounded-pill shadow-sm px-4 text-white"
+                                style="background-color: rgba(255, 255, 255, 0.1) !important;"
+                                id="phone"
+                                name="phone"
+                                placeholder="Contoh: 081234567890"
+                                required
+                            >
+                            <div class="invalid-feedback">
+                                Nomor telepon wajib diisi.
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary rounded-pill py-2">Simpan & Lanjutkan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -118,16 +157,20 @@
 
         /* Google Button Styling */
         .google-btn {
-            background: rgba(255,255,255,0.9);
-            color: #444;
+            background: rgba(42, 40, 52, 0.9);
+            color: #edeaea;
             border: 1px solid rgba(0,0,0,0.1);
             padding: 12px 0;
             font-weight: 500;
+            border: 0.5px solid white;
             transition: all 0.3s ease;
         }
 
+        .google-btn img{
+            width: 25px;
+        }
+
         .google-btn:hover {
-            background: #fff;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
@@ -138,5 +181,22 @@
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
+
+        /* Modal Styling */
+        .modal-content {
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
     </style>
+
+    <!-- Add this JavaScript to show the modal automatically if needed -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(session('show_phone_modal'))
+                var phoneModal = new bootstrap.Modal(document.getElementById('phoneModal'));
+                phoneModal.show();
+            @endif
+        });
+    </script>
 </x-guest-layout>
