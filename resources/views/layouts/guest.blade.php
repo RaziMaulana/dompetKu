@@ -7,15 +7,23 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <style>
-
+           body {
+                background-image: url('{{ asset('Image/LoginAndRegisterBackgroundImage.png') }}');
+                background-size: cover; /* Menutupi seluruh area */
+                background-position: center; /* Posisi gambar di tengah */
+                background-repeat: no-repeat; /* Gambar tidak diulang */
+                background-attachment: fixed; /* Gambar tetap diam saat di-scroll (opsional) */
+                min-height: 100vh; /* Tinggi minimal sama dengan tinggi layar */
+                margin: 0; /* Menghapus margin default */
+            }
         </style>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+    <body>
+        <div>
+            <div>
                 {{ $slot }}
             </div>
         </div>
