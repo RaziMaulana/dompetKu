@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="container min-vh-100 d-flex align-items-center text-white">
         <div class="row justify-content-center w-100">
-            <div class="col-md-8 col-lg-6 col-xl-5">
+            <div class="col-md-8 col-lg-6 col-xl-5  py-5">
                 <div class="card shadow-lg border-0" style="background-color: transparent">
                     <div class="card-body p-md-5">
                         <!-- Header -->
