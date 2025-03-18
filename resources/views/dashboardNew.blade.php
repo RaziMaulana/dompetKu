@@ -277,6 +277,49 @@
             color: #000;
         }
 
+        .banner {
+                position: relative;
+                width: 100%;
+                height: 320px;
+                overflow: hidden;
+            }
+
+            .slides {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+            }
+
+            .slide {
+                min-width: 100%;
+                height: 320px;
+                display: none;
+            }
+
+            .slide.active {
+                display: block;
+            }
+
+            .dots {
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 5px;
+            }
+
+            .dot {
+                width: 8px;
+                height: 8px;
+                background-color: rgba(255, 255, 255, 0.5);
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            .dot.active {
+                background-color: white;
+            }
+
     </style>
 </head>
 
@@ -286,15 +329,14 @@
         <!-- Header -->
         <div class="header">
             <div class="logo">
-                <img src="" alt="Logo">
-
+                <img src="{{ asset('image/dompetKu-logo.png') }}" alt="Logo">
             </div>
             <div class="nav">
-                <span class="nav-item active">Beranda</span>
-                <span class="nav-item">Transfer</span>
-                <span class="nav-item">Aktivitas</span>
-                <span class="nav-item">Catatan</span>
-                <span class="nav-item">Investasi</span>
+                <a href="#" class="nav-item active">Beranda</a>
+                <a href="#" class="nav-item">Transfer</a>
+                <a href="#" class="nav-item">Aktivitas</a>
+                <a href="#" class="nav-item">Catatan</a>
+                <a href="#" class="nav-item">Investasi</a>
             </div>
             <div class="header-right">
                 <div class="icon">
@@ -321,10 +363,15 @@
 
         <!-- Banner -->
         <div class="banner">
+            <div class="slides">
+                <img src="image1.jpg" class="slide active">
+                <img src="image2.jpg" class="slide">
+                <img src="image3.jpg" class="slide">
+            </div>
             <div class="dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot active"></div>
+                <div class="dot active" onclick="currentSlide(1)"></div>
+                <div class="dot" onclick="currentSlide(2)"></div>
+                <div class="dot" onclick="currentSlide(3)"></div>
             </div>
         </div>
 
@@ -335,7 +382,9 @@
                 <div class="balance-amount">Rp1.000.000</div>
                 <div class="balance-info">Tersedia di Walletmu</div>
                 <div class="menu-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <circle cx="12" cy="12" r="1"></circle>
                         <circle cx="12" cy="5" r="1"></circle>
                         <circle cx="12" cy="19" r="1"></circle>
@@ -377,12 +426,15 @@
 
             <div class="search-container">
                 <div class="search-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="#999" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                 </div>
-                <input type="text" class="search-input" placeholder="Cari Nama Pengguna, Alamat Email, Nomor Telepon">
+                <input type="text" class="search-input"
+                    placeholder="Cari Nama Pengguna, Alamat Email, Nomor Telepon">
             </div>
 
             <div class="tabs">
@@ -399,7 +451,9 @@
                         </td>
                         <td width="25%">
                             <div class="transaction-status">
-                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18"
+                                    height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                                 Selesai
@@ -416,7 +470,9 @@
                         </td>
                         <td>
                             <div class="transaction-status">
-                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18"
+                                    height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                                 Selesai
@@ -433,7 +489,9 @@
                         </td>
                         <td>
                             <div class="transaction-status">
-                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18"
+                                    height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                                 Selesai
@@ -450,7 +508,9 @@
                         </td>
                         <td>
                             <div class="transaction-status">
-                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18"
+                                    height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                                 Selesai
@@ -466,6 +526,31 @@
 
     </div>
 
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                dots[i].classList.remove("active");
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].classList.add("active");
+            setTimeout(showSlides, 5000);
+        }
+
+        function currentSlide(n) {
+            slideIndex = n - 1;
+            showSlides();
+        }
+    </script>
 
 </body>
 
