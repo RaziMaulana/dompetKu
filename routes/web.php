@@ -10,7 +10,11 @@ Route::get('/', function () {
 
 Route::get('/dashboardNew', function () {
     return view('dashboardNew');
-});
+})->middleware(['auth', 'verified'])->name('dashboard-new');
+
+Route::get('/transfer-dashboard', function () {
+    return view('transfers.transfer-dashboard');
+})->middleware(['auth', 'verified'])->name('transfer-dashboard');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

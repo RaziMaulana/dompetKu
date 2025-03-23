@@ -3,67 +3,245 @@
 <head>
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            background-color: white;
-            height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            background-color: #1a1f2b;
-            display: flex;
-            align-items: center;
-            padding: 15px 140px;
-            justify-content: space-between;
-            color: white;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-        }
-
-        .nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-item {
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .nav-item.active {
-            color: #3498db;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 15px;
-        }
-
         /* Banner */
-        .banner {
-            background-color: #3498db;
-            height: 320px;
+    .banner {
+        background-color: #3498db;
+        height: 320px;
+        position: relative;
+    }
+
+    .dots {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 5px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+    }
+
+    .dot.active {
+        background-color: white;
+    }
+
+    /* Wrapper untuk Balance Card dan Action Buttons */
+    .balance-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        padding: 30px 140px;
+    }
+
+    /* Balance Card */
+    .balance-card {
+        background-image: url('{{ asset('image/background-saldo.png') }}');
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        padding: 20px;
+        color: white;
+        position: relative;
+        width: 60%;
+        height: 240px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-grow: 1;
+    }
+
+    /* Title, Amount, Info */
+    .balance-title {
+        font-size: 20px;
+        margin-top: -50px;
+    }
+
+    .balance-amount {
+        font-size: 33px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .balance-info {
+        font-size: 14px;
+        color: #ccc;
+        margin-top: 10px;
+    }
+
+    /* Icon Menu */
+    .menu-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+    }
+
+    /* Action Buttons (Diatur menjadi 2x2) */
+    .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    /* Style untuk tiap tombol */
+    .action-button {
+        background-color: #0066cc;
+        border-radius: 10px;
+        width: 110px;
+        height: 110px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .action-icon {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .action-label {
+        font-size: 14px;
+    }
+
+    .card {
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
+        width: calc(100% - 280px);
+        margin: 10px 140px;
+    }
+
+    .activity-header {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .search-container {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 14px 15px 14px 45px;
+        border: 1px solid #e0e0e0;
+        border-radius: 50px;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .search-input::placeholder {
+        color: #999;
+    }
+
+    .tabs {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 30px;
+        margin-right: 10px;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .tab.active {
+        background-color: #e0e0e0;
+        color: #000;
+        font-weight: bold;
+    }
+
+    /* Styling for table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    tr {
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    tr:last-child {
+        border-bottom: none;
+    }
+
+    td {
+        padding: 15px 0;
+        vertical-align: middle;
+    }
+
+    .transaction-name {
+        font-weight: 500;
+    }
+
+    .transaction-status {
+        color: #4CAF50;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .check-icon {
+        margin-right: 5px;
+        color: #4CAF50;
+    }
+
+    .transaction-amount {
+        text-align: right;
+        font-weight: 500;
+    }
+
+    .transaction-amount.positive {
+        color: #4CAF50;
+    }
+
+    .transaction-amount.negative {
+        color: #000;
+    }
+
+    .banner {
             position: relative;
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 320px;
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
         }
 
         .dots {
@@ -80,245 +258,12 @@
             height: 8px;
             background-color: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
+            cursor: pointer;
         }
 
         .dot.active {
             background-color: white;
         }
-
-        /* Wrapper untuk Balance Card dan Action Buttons */
-        .balance-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-            padding: 30px 140px;
-        }
-
-        /* Balance Card */
-        .balance-card {
-            background-image: url('{{ asset('image/background-saldo.png') }}');
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
-            padding: 20px;
-            color: white;
-            position: relative;
-            width: 60%;
-            height: 240px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex-grow: 1;
-        }
-
-        /* Title, Amount, Info */
-        .balance-title {
-            font-size: 20px;
-            margin-top: -50px;
-        }
-
-        .balance-amount {
-            font-size: 33px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .balance-info {
-            font-size: 14px;
-            color: #ccc;
-            margin-top: 10px;
-        }
-
-        /* Icon Menu */
-        .menu-icon {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
-        }
-
-        /* Action Buttons (Diatur menjadi 2x2) */
-        .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        /* Style untuk tiap tombol */
-        .action-button {
-            background-color: #0066cc;
-            border-radius: 10px;
-            width: 110px;
-            height: 110px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .action-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .action-label {
-            font-size: 14px;
-        }
-
-        .card {
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
-            width: calc(100% - 280px);
-            margin: 10px 140px;
-        }
-
-        .activity-header {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .search-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 14px 15px 14px 45px;
-            border: 1px solid #e0e0e0;
-            border-radius: 50px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .search-input::placeholder {
-            color: #999;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 30px;
-            margin-right: 10px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .tab.active {
-            background-color: #e0e0e0;
-            color: #000;
-            font-weight: bold;
-        }
-
-        /* Styling for table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        tr {
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        tr:last-child {
-            border-bottom: none;
-        }
-
-        td {
-            padding: 15px 0;
-            vertical-align: middle;
-        }
-
-        .transaction-name {
-            font-weight: 500;
-        }
-
-        .transaction-status {
-            color: #4CAF50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .check-icon {
-            margin-right: 5px;
-            color: #4CAF50;
-        }
-
-        .transaction-amount {
-            text-align: right;
-            font-weight: 500;
-        }
-
-        .transaction-amount.positive {
-            color: #4CAF50;
-        }
-
-        .transaction-amount.negative {
-            color: #000;
-        }
-
-        .banner {
-                position: relative;
-                width: 100%;
-                height: 320px;
-                overflow: hidden;
-            }
-
-            .slides {
-                display: flex;
-                transition: transform 0.5s ease-in-out;
-            }
-
-            .slide {
-                min-width: 100%;
-                height: 320px;
-                display: none;
-            }
-
-            .slide.active {
-                display: block;
-            }
-
-            .dots {
-                position: absolute;
-                bottom: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                display: flex;
-                gap: 5px;
-            }
-
-            .dot {
-                width: 8px;
-                height: 8px;
-                background-color: rgba(255, 255, 255, 0.5);
-                border-radius: 50%;
-                cursor: pointer;
-            }
-
-            .dot.active {
-                background-color: white;
-            }
-
     </style>
 </head>
 

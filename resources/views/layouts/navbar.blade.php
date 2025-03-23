@@ -1,13 +1,71 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+        background-color: white;
+        height: 100vh;
+    }
+
+    /* Header */
+    .header {
+        background-color: #1a1f2b;
+        display: flex;
+        align-items: center;
+        padding: 15px 140px;
+        justify-content: space-between;
+        color: white;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+
+    .nav {
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-item {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .nav-item.active {
+        color: #3498db;
+    }
+
+    .header-right {
+        display: flex;
+        gap: 15px;
+    }
+
+</style>
+
 <div class="header">
     <div class="logo">
         <img src="{{ asset('image/dompetKu-logo.png') }}" alt="Logo">
     </div>
     <div class="nav">
-        <a href="#" class="nav-item active">Beranda</a>
-        <a href="#" class="nav-item">Transfer</a>
-        <a href="#" class="nav-item">Aktivitas</a>
-        <a href="#" class="nav-item">Catatan</a>
-        <a href="#" class="nav-item">Investasi</a>
+        <a href="{{ route('dashboard-new') }}" class="nav-item {{ Request::routeIs('dashboard-new') ? 'active' : '' }}">Beranda</a>
+        <a href="{{ route('transfer-dashboard') }}" class="nav-item {{ Request::routeIs('transfer-dashboard') ? 'active' : '' }}">Transfer</a>
+        <a href="#" class="nav-item {{ Request::routeIs('activity') ? 'active' : '' }}">Aktivitas</a>
+        <a href="#" class="nav-item {{ Request::routeIs('notes') ? 'active' : '' }}">Catatan</a>
+        <a href="#" class="nav-item {{ Request::routeIs('investment') ? 'active' : '' }}">Investasi</a>
     </div>
     <div class="header-right">
         <div class="icon">
