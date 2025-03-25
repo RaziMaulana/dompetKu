@@ -12,9 +12,17 @@ Route::get('/', function () {
     return view('dashboardNew');
 })->name('dashboard-new');
 
+Route::get('/transfer-minta', function () {
+    return view('transfers.transfer-minta');
+})->middleware(['auth', 'verified'])->name('transfer-minta');
+
 Route::get('/transfer-dashboard', function () {
     return view('transfers.transfer-dashboard');
 })->middleware(['auth', 'verified'])->name('transfer-dashboard');
+
+Route::get('/transfer-topup', function () {
+    return view('transfers.transfer-topup');
+})->middleware(['auth', 'verified'])->name('transfer-topup');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

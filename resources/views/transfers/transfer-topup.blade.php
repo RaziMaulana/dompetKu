@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-
 <head>
     <title>Transfer | DompetKu</title>
+
     <style>
-        main {
+         main {
             margin: 0 136px;
         }
 
@@ -25,37 +25,6 @@
         .menu-tab.active {
             color: black;
             border-bottom: 2px solid black;
-        }
-
-        .content {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            justify-content: space-between;
-        }
-
-        .transfer-option {
-            flex: 1 1 calc(33.333% - 20px);
-            background-color: #5b9aff;
-            border-radius: 15px;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            color: white;
-            cursor: pointer;
-            max-width: 300px;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 0;
-            box-sizing: border-box;
-            border: none;
-        }
-
-        .transfer-option img {
-            width: 50px;
-            height: 50px;
-            margin-right: 15px;
-            margin-left: 25px;
         }
 
         .card {
@@ -143,38 +112,36 @@
             text-align: right;
             font-weight: 500;
         }
-    </style>
-</head>
 
+        .img-bank {
+            width: 50px;
+            height: 50px;
+            margin: 10px 30px;
+        }
+
+        .daftar-img {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 20px;
+        }
+
+    </style>
+
+</head>
 <body>
+
     @include('layouts.navbar')
 
     <main>
-
         <div class="tab-container">
             <div class="menu-tab {{ Request::routeIs('transfer-dashboard') ? 'active' : '' }}" data-url="{{ route('transfer-dashboard') }}">Kirim</div>
             <div class="menu-tab {{ Request::routeIs('transfer-minta') ? 'active' : '' }}" data-url="{{ route('transfer-minta') }}">Minta</div>
             <div class="menu-tab {{ Request::routeIs('transfer-topup') ? 'active' : '' }}" data-url="{{ route('transfer-topup') }}">Top up</div>
         </div>
 
-        <div class="content">
-
-            <button class="transfer-option">
-                <img src="{{ asset('image/dompetku2.png') }}" alt=""> DompetKu.
-            </button>
-
-            <button class="transfer-option">
-                <img src="{{ asset('image/bank-logo.png') }}" alt=""> Bank
-            </button>
-
-            <button class="transfer-option">
-                <img src="{{ asset('image/e-wallet.png') }}" alt=""> E Wallet
-            </button>
-
-        </div>
-
         <div class="card">
-            <div class="activity-header">Kirim Pembayaran</div>
+            <div class="activity-header">Metode Top Up <br> Mulai dari E Wallet, ATM, m-banking, internet banking, dan lain-lain</div>
 
             <div class="search-container">
                 <div class="search-icon">
@@ -196,65 +163,11 @@
 
             <table>
                 <tbody>
-                    <tr>
-                        <td width="50%">
-                            <div class="transaction-name">Raditya Anugrah Sagitaris</div>
-                        </td>
-                        <td width="25%">
-                            <div class="transaction-status">
+                    <div class="daftar-img">
 
-                                Gopay
-                            </div>
-                        </td>
-                        <td width="25%">
-                            <div class="transaction-amount">0811 2233 4455</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="transaction-name">Zahra Nur Azizah</div>
-                        </td>
-                        <td>
-                            <div class="transaction-status">
-
-                                Mandiri
-                            </div>
-                        </td>
-                        <td>
-                            <div class="transaction-amount">0811 2233 4455</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="transaction-name">Fatur Al Khafi</div>
-                        </td>
-                        <td>
-                            <div class="transaction-status">
-
-                                Gopay
-                            </div>
-                        </td>
-                        <td>
-                            <div class="transaction-amount">0811 2233 4455</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="transaction-name">Dr Tirta</div>
-                        </td>
-                        <td>
-                            <div class="transaction-status">
-
-                                Mandiri
-                            </div>
-                        </td>
-                        <td>
-                            <div class="transaction-amount">0811 2233 4455</div>
-                        </td>
-                    </tr>
+                    </div>
+                    <img class="img-bank" src="{{ asset('image/BRI.png') }}" alt="">
+                    <div>BRI</div>
                 </tbody>
             </table>
         </div> <br>
@@ -274,5 +187,4 @@
     </script>
 
 </body>
-
 </html>
