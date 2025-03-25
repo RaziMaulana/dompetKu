@@ -1,8 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Transfers\TransferKirim\TransferKirimController;
+use App\Http\Controllers\Transfers\TransferMinta\TransferMintaController;
+use App\Http\Controllers\Transfers\TransferTopUp\TransferTopUpController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -12,17 +16,19 @@ Route::get('/', function () {
     return view('dashboardNew');
 })->name('dashboard-new');
 
-Route::get('/transfer-minta', function () {
-    return view('transfers.transfer-minta');
-})->middleware(['auth', 'verified'])->name('transfer-minta');
+Route::prefix('transfer-kirim')->group(function () {
+    Route::get('/', [TransferKirimController::class, 'TransferKirimIndex'])->middleware(['auth', 'verified'])->name('transfer-kirim.index');
+});
 
-Route::get('/transfer-dashboard', function () {
-    return view('transfers.transfer-dashboard');
-})->middleware(['auth', 'verified'])->name('transfer-dashboard');
+// Route untuk Transfer Minta
+Route::prefix('transfer-minta')->group(function () {
+    Route::get('/', [TransferMintaController::class, 'TransferMintaIndex'])->middleware(['auth', 'verified'])->name('transfer-minta.index');
+});
 
-Route::get('/transfer-topup', function () {
-    return view('transfers.transfer-topup');
-})->middleware(['auth', 'verified'])->name('transfer-topup');
+// Route untuk Transfer Top Up
+Route::prefix('transfer-topup')->group(function () {
+    Route::get('/', [TransferTopUpController::class, 'TransferTopUpIndex'])->middleware(['auth', 'verified'])->name('transfer-topup.index');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

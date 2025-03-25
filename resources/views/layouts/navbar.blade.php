@@ -93,7 +93,7 @@
     </div>
     <div class="nav">
         <a href="{{ route('dashboard-new') }}" class="nav-item {{ Request::routeIs('dashboard-new') ? 'active' : '' }}">Beranda</a>
-        <a href="{{ route('transfer-dashboard') }}" class="nav-item {{ Request::routeIs('transfer-dashboard') || Request::routeIs('transfer-minta') || Request::routeIs('transfer-topup') ? 'active' : '' }}">Transfer</a>
+        <a href="{{ route('transfer-kirim.index') }}" class="nav-item {{ Request::routeIs('transfer-kirim.index') || Request::routeIs('transfer-minta.index') || Request::routeIs('transfer-topup.index') ? 'active' : '' }}">Transfer</a>
         <a href="#" class="nav-item {{ Request::routeIs('activity') ? 'active' : '' }}">Aktivitas</a>
         <a href="#" class="nav-item {{ Request::routeIs('notes') ? 'active' : '' }}">Catatan</a>
         <a href="#" class="nav-item {{ Request::routeIs('investment') ? 'active' : '' }}">Investasi</a>

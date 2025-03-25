@@ -30,7 +30,7 @@
         .content {
             display: flex;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 50px;
             justify-content: space-between;
         }
 
@@ -152,9 +152,9 @@
     <main>
 
         <div class="tab-container">
-            <div class="menu-tab {{ Request::routeIs('transfer-dashboard') ? 'active' : '' }}" data-url="{{ route('transfer-dashboard') }}">Kirim</div>
-            <div class="menu-tab {{ Request::routeIs('transfer-minta') ? 'active' : '' }}" data-url="{{ route('transfer-minta') }}">Minta</div>
-            <div class="menu-tab {{ Request::routeIs('transfer-topup') ? 'active' : '' }}" data-url="{{ route('transfer-topup') }}">Top up</div>
+            <div class="menu-tab {{ Request::routeIs('transfer-kirim.index') ? 'active' : '' }}" data-url="{{ route('transfer-kirim.index') }}">Kirim</div>
+            <div class="menu-tab {{ Request::routeIs('transfer-minta.index') ? 'active' : '' }}" data-url="{{ route('transfer-minta.index') }}">Minta</div>
+            <div class="menu-tab {{ Request::routeIs('transfer-topup.index') ? 'active' : '' }}" data-url="{{ route('transfer-topup.index') }}">Top up</div>
         </div>
 
         <div class="content">
