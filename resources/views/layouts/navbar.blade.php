@@ -86,6 +86,14 @@
                 </path>
             </svg>
         </div>
-        <div class="icon">Keluar</div>
+
+        @if(Auth::check())
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="icon" style="background: none; border: none; color: white; cursor: pointer;">Keluar</button>
+            </form>
+        @else
+            <a href="{{ route('login') }}" class="icon">Login</a>
+        @endif
     </div>
 </div>

@@ -4,13 +4,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboardNew', function () {
+Route::get('/', function () {
     return view('dashboardNew');
-})->middleware(['auth', 'verified'])->name('dashboard-new');
+})->name('dashboard-new');
 
 Route::get('/transfer-dashboard', function () {
     return view('transfers.transfer-dashboard');
