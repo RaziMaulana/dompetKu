@@ -16,6 +16,12 @@
                             </div>
                         @endif
 
+                        @if (session('google_login_success'))
+                            <div class="alert alert-success mb-4 rounded-3">
+                                {{ session('google_login_success') }}
+                            </div>
+                        @endif
+
                         <form method="POST" class="text-white" action="{{ route('login') }}">
                             @csrf
 
@@ -91,6 +97,32 @@
                         </form>
                     </div>
                 </div>
+
+                @if (session('needs_phone') || session('show_phone_modal'))
+                    <!-- Modal Tambah Nomor Telepon -->
+                    <div class="modal fade show" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-modal="true" style="display: block; background: rgba(0,0,0,0.5);">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content bg-dark text-white">
+                                <div class="modal-header border-0">
+                                    <h5 class="modal-title" id="phoneModalLabel">Tambahkan Nomor Telepon</h5>
+                                    <a href="{{ route('login') }}" class="btn-close btn-close-white" aria-label="Close"></a>
+                                </div>
+                                <form method="POST" action="{{ route('google.store.phone') }}">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label">Nomor Telepon</label>
+                                            <input type="text" class="form-control text-white" id="phone" name="phone" required placeholder="Masukkan nomor telepon">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer border-0">
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -148,4 +180,49 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
     </style>
+
+    @if (session('needs_phone') || session('show_phone_modal'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var phoneModal = new bootstrap.Modal(document.getElementById('phoneModal'));
+            phoneModal.show();
+
+            // Get the phone input element
+            var phoneInput = document.getElementById('phone');
+
+            // Add event listener to allow only numeric input
+            phoneInput.addEventListener('input', function(e) {
+                // Remove any non-numeric characters
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+
+            // Form submission validation
+            document.getElementById('phoneForm').addEventListener('submit', function(e) {
+                var phoneValue = phoneInput.value.trim();
+
+                // Check if input is empty
+                if (phoneValue === '') {
+                    e.preventDefault();
+                    alert('Nomor telepon tidak boleh kosong');
+                    return;
+                }
+
+                // Check length (10-14 digits)
+                if (phoneValue.length < 10 || phoneValue.length > 14) {
+                    e.preventDefault();
+                    alert('Nomor telepon harus antara 10-14 digit');
+                    return;
+                }
+
+                // Check if starts with 08 or 62
+                if (!phoneValue.startsWith('08') && !phoneValue.startsWith('62')) {
+                    e.preventDefault();
+                    alert('Nomor telepon harus diawali dengan 08 atau 62');
+                    return;
+                }
+            });
+        });
+    </script>
+    @endif
+
 </x-guest-layout>

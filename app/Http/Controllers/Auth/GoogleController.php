@@ -24,9 +24,9 @@ class GoogleController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if ($user) {
-                // Jika pengguna sudah terdaftar, langsung login
+                // Jika pengguna sudah terdaftar, login dan arahkan ke dashboard-new
                 Auth::login($user, true);
-                return redirect()->intended('/'); // Ganti dengan rute yang sesuai
+                return redirect()->route('dashboard-new');
             } else {
                 // Jika pengguna belum terdaftar, simpan data Google ke session dan tampilkan form telepon
                 session([
@@ -44,12 +44,6 @@ class GoogleController extends Controller
         }
     }
 
-    /**
-     * Menyimpan pengguna baru dengan data Google dan nomor telepon
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function storeGoogleUserWithPhone(Request $request)
     {
         $request->validate([
@@ -63,7 +57,7 @@ class GoogleController extends Controller
             'google_id' => session('google_id'),
             'avatar' => session('google_avatar'),
             'phone' => $request->phone,
-            'password' => bcrypt(uniqid()), // Buat password acak sesuai dengan kode asli Anda
+            'password' => bcrypt(uniqid()),
         ]);
 
         // Hapus data session
@@ -72,6 +66,7 @@ class GoogleController extends Controller
         // Login pengguna
         Auth::login($user, true);
 
-        return redirect()->intended('/');
+        // Arahkan ke dashboard-new setelah login berhasil
+        return redirect()->route('dashboard-new');
     }
 }
