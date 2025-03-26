@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Transfers\PIN\PinController;
+use App\Http\Controllers\CatatanDaftarController;
+use App\Http\Controllers\CatatanKategoriController;
 use App\Http\Controllers\Transfers\TransferKirim\TransferKirimController;
 use App\Http\Controllers\Transfers\TransferMinta\TransferMintaController;
 use App\Http\Controllers\Transfers\TransferTopUp\TransferTopUpController;
@@ -41,6 +44,19 @@ Route::prefix('set-pin')->group(function () {
 // Transfers(Pin Section) end
 
 // Transfers End
+Route::prefix('catatan')->group(function () {
+    Route::get('/', [CatatanController::class, 'index'])->middleware(['auth', 'verified'])->name('catatan.index');
+});
+
+Route::prefix('catatan-daftar')->group(function () {
+    Route::get('/', [CatatanDaftarController::class, 'index'])->middleware(['auth', 'verified'])->name('catatan-daftar.index');
+});
+
+Route::prefix('catatan-kategori')->group(function () {
+    Route::get('/', [CatatanKategoriController::class, 'index'])->middleware(['auth', 'verified'])->name('catatan-kategori.index');
+});
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
