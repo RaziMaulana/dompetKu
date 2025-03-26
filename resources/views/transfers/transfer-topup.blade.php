@@ -38,6 +38,7 @@
         }
         .card {
             border-radius: 16px;
+            margin: 0 98px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .search-container {
@@ -121,23 +122,23 @@
             <div class="daftar-img">
                 <div>
                     <img class="bank-logo" src="{{ asset('image/BRI.png') }}" alt="BRI">
-                    <div>BRI</div>
+                    <div style="text-align: center">BRI</div>
                 </div>
                 <div>
                     <img class="bank-logo" src="{{ asset('image/BCA.png') }}" alt="BCA">
-                    <div>BCA</div>
+                    <div style="text-align: center">BCA</div>
                 </div>
                 <div>
                     <img class="bank-logo" src="{{ asset('image/Mandiri.png') }}" alt="Mandiri">
-                    <div>Mandiri</div>
+                    <div style="text-align: center">Mandiri</div>
                 </div>
                 <div>
                     <img class="bank-logo" src="{{ asset('image/BNI.png') }}" alt="BNI">
-                    <div>BNI</div>
+                    <div style="text-align: center">BNI</div>
                 </div>
                 <div>
                     <img class="bank-logo" src="{{ asset('image/Jago.png') }}" alt="Jago">
-                    <div>Jago</div>
+                    <div style="text-align: center">Jago</div>
                 </div>
             </div>
         </div>
