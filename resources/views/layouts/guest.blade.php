@@ -9,12 +9,12 @@
         <style>
            body {
                 background-image: url('{{ asset('Image/LoginAndRegisterBackgroundImage.png') }}');
-                background-size: cover; /* Menutupi seluruh area */
-                background-position: center; /* Posisi gambar di tengah */
-                background-repeat: no-repeat; /* Gambar tidak diulang */
-                background-attachment: fixed; /* Gambar tetap diam saat di-scroll (opsional) */
-                min-height: 100vh; /* Tinggi minimal sama dengan tinggi layar */
-                margin: 0; /* Menghapus margin default */
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                min-height: 100vh;
+                margin: 0;
             }
         </style>
 
