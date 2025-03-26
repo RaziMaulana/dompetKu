@@ -1,5 +1,5 @@
-<!-- filepath: c:\laragon\www\dompetKu\resources\views\transfers\topup\transaksi-topup.blade.php -->
 <!DOCTYPE html>
+<html>
 <head>
     <title>Transfer | DompetKu</title>
 
@@ -170,12 +170,9 @@
             color: #4285F4;
             cursor: pointer;
         }
-
     </style>
-
 </head>
 <body>
-
     @include('layouts.navbar')
 
     <main>
@@ -235,20 +232,49 @@
 
             <button class="btn-submit">Transfer</button>
             <p class="cancel-button" onclick="window.location.href='{{ route('transfer-topup.index') }}'">Batalkan</p>
-
         </div>
-
     </main>
 
     <script>
+        // Menu Tab Navigation
         const menuTab = document.querySelectorAll('.menu-tab');
-
         menuTab.forEach(tab => {
             tab.addEventListener('click', function() {
                 window.location.href = tab.getAttribute('data-url');
             });
         });
-    </script>
 
+        // Amount Input Functionality
+        const amountInput = document.querySelector('.amount-input');
+        const amountButtons = document.querySelectorAll('.amount-button');
+
+        amountButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove 'Rp' and '.' from the button text to create a clean number
+                const amount = this.textContent.replace('Rp', '').replace(/\./g, '');
+
+                // Format the number with dots as thousand separators
+                amountInput.value = `Rp ${formatNumberWithDots(amount)}`;
+            });
+        });
+
+        // Function to add dots as thousand separators
+        function formatNumberWithDots(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Optional: Allow manual editing with proper formatting
+        amountInput.addEventListener('input', function() {
+            // Remove all non-digit characters
+            let numberOnly = this.value.replace(/\D/g, '');
+
+            // Ensure the input always starts with Rp
+            if (numberOnly) {
+                this.value = `Rp ${formatNumberWithDots(numberOnly)}`;
+            } else {
+                this.value = '';
+            }
+        });
+    </script>
 </body>
 </html>
