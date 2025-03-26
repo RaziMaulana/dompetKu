@@ -306,24 +306,24 @@
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-                <div class="action-button">
+                <a href="{{ route('transfer-kirim.index')}}" class="action-button" style="text-decoration: none;">
                     <div class="action-icon">
                         <i class="fa-solid fa-location-arrow"></i>
                     </div>
                     <div class="action-label">Kirim</div>
-                </div>
-                <div class="action-button">
+                </a>
+                <a href="{{ route('transfer-minta.index')}}" class="action-button" style="text-decoration: none;">
                     <div class="action-icon">
                         <i class="fa-solid fa-hand-holding"></i>
                     </div>
                     <div class="action-label">Minta</div>
-                </div>
-                <div class="action-button">
+                </a>
+                <a href="{{ route('transfer-topup.index') }}" class="action-button" style="text-decoration: none;">
                     <div class="action-icon">
                         <i class="fa-solid fa-circle-plus"></i>
                     </div>
                     <div class="action-label">Top Up</div>
-                </div>
+                </a>
                 <div class="action-button">
                     <div class="action-icon">
                         <i class="fa-solid fa-arrow-down"></i>
