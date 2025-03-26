@@ -20,4 +20,30 @@ class TransferTopUpController extends Controller
 
         return view('transfers.transfer-topup');
     }
+
+    public function TransaksiTopUp(){
+        return view('transfers.topup.transaksi-topup');
+    }
+
+
+    public function PilihMetodeTopUp(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'icon' => 'required|string',
+            'nomor' => 'required|string',
+        ]);
+
+        session([
+            'metode_topup' => [
+                'nama' => $request->nama,
+                'icon' => $request->icon,
+                'nomor' => $request->nomor,
+            ]
+        ]);
+
+        return redirect()->route('transaksi-topup');
+    }
+
+
 }

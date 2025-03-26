@@ -1,3 +1,4 @@
+<!-- filepath: c:\laragon\www\dompetKu\resources\views\transfers\transfer-topup.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,18 +33,22 @@
             cursor: pointer;
             font-weight: bold;
         }
+
         .menu-tab.active {
             color: black;
             border-bottom: 2px solid black;
         }
+
         .card {
             border-radius: 16px;
             margin: 0 98px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         .search-container {
             position: relative;
         }
+
         .search-icon {
             position: absolute;
             left: 15px;
@@ -52,14 +57,17 @@
             color: #999;
             z-index: 10;
         }
+
         .form-control {
             padding-left: 40px;
             border-radius: 50px;
         }
+
         .tabs {
             display: flex;
             margin-top: 20px;
         }
+
         .tab {
             padding: 10px 20px;
             border-radius: 30px;
@@ -67,23 +75,33 @@
             cursor: pointer;
             margin-right: 10px;
         }
+
         .tab.active {
             background-color: #e0e0e0;
             color: #000;
             font-weight: bold;
         }
+
         .daftar-img {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
             padding-top: 10px;
         }
+
         .bank-logo {
             width: 60px;
             height: 60px;
             object-fit: cover;
+            cursor: pointer;
             margin-bottom: 10px;
         }
+
+        .metode-group {
+            text-decoration: none;
+            color: black;
+        }
+
     </style>
 </head>
 <body>
@@ -120,26 +138,56 @@
             </div>
 
             <div class="daftar-img">
-                <div>
-                    <img class="bank-logo" src="{{ asset('image/BRI.png') }}" alt="BRI">
-                    <div style="text-align: center">BRI</div>
-                </div>
-                <div>
-                    <img class="bank-logo" src="{{ asset('image/BCA.png') }}" alt="BCA">
-                    <div style="text-align: center">BCA</div>
-                </div>
-                <div>
-                    <img class="bank-logo" src="{{ asset('image/Mandiri.png') }}" alt="Mandiri">
-                    <div style="text-align: center">Mandiri</div>
-                </div>
-                <div>
-                    <img class="bank-logo" src="{{ asset('image/BNI.png') }}" alt="BNI">
-                    <div style="text-align: center">BNI</div>
-                </div>
-                <div>
-                    <img class="bank-logo" src="{{ asset('image/Jago.png') }}" alt="Jago">
-                    <div style="text-align: center">Jago</div>
-                </div>
+                <form action="{{ route('topup.pilih-metode') }}" method="POST" class="metode-group">
+                    @csrf
+                    <input type="hidden" name="nama" value="BRI">
+                    <input type="hidden" name="icon" value="{{ asset('image/BRI.png') }}">
+                    <input type="hidden" name="nomor" value="0811 2233 4455">
+                    <button type="submit" class="btn btn-link p-0">
+                        <img class="bank-logo" src="{{ asset('image/BRI.png') }}" alt="BRI">
+                        <div class="metode-group" style="text-align: center">BRI</div>
+                    </button>
+                </form>
+                <form action="{{ route('topup.pilih-metode') }}" method="POST" class="metode-group">
+                    @csrf
+                    <input type="hidden" name="nama" value="BCA">
+                    <input type="hidden" name="icon" value="{{ asset('image/BCA.png') }}">
+                    <input type="hidden" name="nomor" value="0811 2233 4455">
+                    <button type="submit" class="btn btn-link p-0">
+                        <img class="bank-logo" src="{{ asset('image/BCA.png') }}" alt="BCA">
+                        <div class="metode-group" style="text-align: center">BCA</div>
+                    </button>
+                </form>
+                <form action="{{ route('topup.pilih-metode') }}" method="POST" class="metode-group">
+                    @csrf
+                    <input type="hidden" name="nama" value="Mandiri">
+                    <input type="hidden" name="icon" value="{{ asset('image/Mandiri.png') }}">
+                    <input type="hidden" name="nomor" value="0811 2233 4455">
+                    <button type="submit" class="btn btn-link p-0">
+                        <img class="bank-logo" src="{{ asset('image/Mandiri.png') }}" alt="Mandiri">
+                        <div class="metode-group" style="text-align: center">Mandiri</div>
+                    </button>
+                </form>
+                <form action="{{ route('topup.pilih-metode') }}" method="POST" class="metode-group">
+                    @csrf
+                    <input type="hidden" name="nama" value="BNI">
+                    <input type="hidden" name="icon" value="{{ asset('image/BNI.png') }}">
+                    <input type="hidden" name="nomor" value="0811 2233 4455">
+                    <button type="submit" class="btn btn-link p-0">
+                        <img class="bank-logo" src="{{ asset('image/BNI.png') }}" alt="BNI">
+                        <div class="metode-group" style="text-align: center">BNI</div>
+                    </button>
+                </form>
+                <form action="{{ route('topup.pilih-metode') }}" method="POST" class="metode-group">
+                    @csrf
+                    <input type="hidden" name="nama" value="Jago">
+                    <input type="hidden" name="icon" value="{{ asset('image/Jago.png') }}">
+                    <input type="hidden" name="nomor" value="0811 2233 4455">
+                    <button type="submit" class="btn btn-link p-0">
+                        <img class="bank-logo" src="{{ asset('image/Jago.png') }}" alt="Jago">
+                        <div class="metode-group" style="text-align: center">Jago</div>
+                    </button>
+                </form>
             </div>
         </div>
 

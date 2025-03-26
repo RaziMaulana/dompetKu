@@ -59,7 +59,14 @@ Route::prefix('catatan-kategori')->group(function () {
 });
 // Catatan End
 
+// Top UP
+Route::prefix('topup')->group(function () {
+    Route::get('/', [TransferTopUpController::class, 'TransaksiTopUp'])->middleware(['auth', 'verified'])->name('topup.index');
+    Route::post('/pilih-metode', [TransferTopUpController::class, 'PilihMetodeTopUp'])->middleware(['auth', 'verified'])->name('topup.pilih-metode');
+    Route::get('/transaksi', [TransferTopUpController::class, 'TransaksiTopUp'])->middleware(['auth', 'verified'])->name('transaksi-topup');
+});
 
+// Top UP End
 
 Route::get('/dashboard', function () {
     return view('dashboard');

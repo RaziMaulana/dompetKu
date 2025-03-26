@@ -97,7 +97,7 @@
             class="nav-item {{ Request::routeIs('dashboard-new') ? 'active' : '' }}">Beranda</a>
         @if (Auth::check())
             <a href="{{ Auth::user()->pin ? route('transfer-kirim.index') : route('set-pin') }}"
-                class="nav-item {{ Request::routeIs('transfer-kirim.index') || Request::routeIs('transfer-minta.index') || Request::routeIs('transfer-topup.index') ? 'active' : '' }}">
+                class="nav-item {{ Request::routeIs('transfer-kirim.index') || Request::routeIs('transfer-minta.index') || Request::routeIs('transfer-topup.index') || Request::routeIs('transaksi-topup') ? 'active' : '' }}">
                 Transfer
             </a>
         @endif
