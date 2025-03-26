@@ -44,6 +44,8 @@ Route::prefix('set-pin')->group(function () {
 // Transfers(Pin Section) end
 
 // Transfers End
+
+// Catatan
 Route::prefix('catatan')->group(function () {
     Route::get('/', [CatatanController::class, 'index'])->middleware(['auth', 'verified'])->name('catatan.index');
 });
@@ -55,6 +57,7 @@ Route::prefix('catatan-daftar')->group(function () {
 Route::prefix('catatan-kategori')->group(function () {
     Route::get('/', [CatatanKategoriController::class, 'index'])->middleware(['auth', 'verified'])->name('catatan-kategori.index');
 });
+// Catatan End
 
 
 
