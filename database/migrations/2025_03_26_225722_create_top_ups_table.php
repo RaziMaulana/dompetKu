@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('top_ups', function (Blueprint $table) {
-            $table->id();
-            $table->string('metode');
-            $table->string('metode_image');
-            $table->string('nominal');
-            $table->string('tujuan');
-            $table->string('pin');
+            $table->id()->primary();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('metode')->nullable();
+            $table->string('metode_image')->nullable();
+            $table->string('nominal')->nullable();
+            $table->string('tujuan')->nullable();
+            $table->string('pin')->nullable();
             $table->timestamps();
         });
     }

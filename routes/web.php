@@ -4,13 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\GoogleController;
-use App\Http\Controllers\Transfers\PIN\PinController;
 use App\Http\Controllers\CatatanDaftarController;
 use App\Http\Controllers\CatatanKategoriController;
+use App\Http\Controllers\Transfers\PIN\PinController;
+use App\Http\Controllers\Transfers\Transaksi\TopUp\TopUpController;
+use App\Http\Controllers\Transfers\Transaksi\TopUp\CheckPinController;
 use App\Http\Controllers\Transfers\TransferKirim\TransferKirimController;
 use App\Http\Controllers\Transfers\TransferMinta\TransferMintaController;
 use App\Http\Controllers\Transfers\TransferTopUp\TransferTopUpController;
-
+use App\Http\Controllers\Transfers\Transaksi\TopUp\TopupSucceedController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -33,6 +35,28 @@ Route::prefix('transfer-minta')->group(function () {
 Route::prefix('transfer-topup')->group(function () {
     Route::get('/', [TransferTopUpController::class, 'TransferTopUpIndex'])->middleware(['auth', 'verified'])->name('transfer-topup.index');
 });
+
+// Transaksi Top-Up
+
+Route::prefix('transaksi-topup')->group(function () {
+    Route::get('/', [TopUpController::class, 'TopUpTransactionIndex'])->middleware(['auth', 'verified'])->name('transaksi-topup.index');
+    Route::post('/store', [TopUpController::class, 'TopUpTransactionStore'])->middleware(['auth', 'verified'])->name('transaksi-topup.store');
+});
+
+Route::prefix('topup-succeed')->group(function () {
+    Route::get('/', [TopupSucceedController::class, 'SucceedIndex'])->middleware(['auth', 'verified'])->name('topup-succeed.index');
+});
+
+// Check PIN section
+
+Route::prefix('check-pin')->group(function () {
+    Route::get('/', [CheckPinController::class, 'CheckPinIndex'])->middleware(['auth', 'verified'])->name('check-pin.index');
+    Route::post('/verify', [CheckPinController::class, 'verifyPin'])->middleware(['auth', 'verified'])->name('check-pin.verify');
+});
+
+// Check PIN section end
+
+// Transaksi Top-Up end
 
 // Transfers(Pin Section)
 

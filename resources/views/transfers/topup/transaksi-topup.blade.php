@@ -182,57 +182,60 @@
             <div class="menu-tab active">Top up</div>
         </div>
 
-        <div class="container">
-            <div class="judul-container">
-                <h1>Dompet Tujuan</h1>
-                <h1>Metode TopUp</h1>
-            </div>
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-icon">
-                        <img src="{{ asset('image/dompetKu-logo.png') }}" alt="Dompetku Icon" style="width: 48px; height: 48px; border-radius: 10px;">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">{{ Auth::user()->name }}</div>
-                        <div class="card-subtitle">Dompetku {{ Auth::user()->phone }}</div>
-                    </div>
+        <form id="topupForm" action="{{ route('transaksi-topup.store') }}" method="POST">
+            @csrf
+            <div class="container">
+                <div class="judul-container">
+                    <h1>Dompet Tujuan</h1>
+                    <h1>Metode TopUp</h1>
                 </div>
-                @if(session('metode_topup'))
+                <div class="card-container">
                     <div class="card">
                         <div class="card-icon">
-                            <img src="{{ session('metode_topup.icon') }}" alt="{{ session('metode_topup.nama') }} Icon" style="width: 48px; height: 48px; border-radius: 10px;">
+                            <img src="{{ asset('image/dompetKu-logo.png') }}" alt="Dompetku Icon" style="width: 48px; height: 48px; border-radius: 10px;">
                         </div>
                         <div class="card-content">
-                            <div class="card-title">{{ session('metode_topup.nama') }}</div>
-                            <div class="card-subtitle">{{ session('metode_topup.nomor') }}</div>
+                            <div class="card-title">{{ Auth::user()->name }}</div>
+                            <div class="card-subtitle">Dompetku {{ Auth::user()->phone }}</div>
                         </div>
                     </div>
-                @else
-                {{--  --}}
-                @endif
-            </div>
-
-            <div class="amount-container">
-                <div class="amount-input-container">
-                    <input type="text" class="amount-input" placeholder="Rp 0" />
-                    <span class="edit-icon">✏️</span>
+                    @if(session('metode_topup'))
+                        <div class="card">
+                            <div class="card-icon">
+                                <img src="{{ session('metode_topup.icon') }}" alt="{{ session('metode_topup.nama') }} Icon" style="width: 48px; height: 48px; border-radius: 10px;">
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title">{{ session('metode_topup.nama') }}</div>
+                                <div class="card-subtitle">{{ session('metode_topup.nomor') }}</div>
+                            </div>
+                        </div>
+                    @else
+                    {{--  --}}
+                    @endif
                 </div>
 
-                <div class="amount-buttons">
-                    <button class="amount-button">Rp20.000</button>
-                    <button class="amount-button">Rp50.000</button>
-                    <button class="amount-button">Rp80.000</button>
-                    <button class="amount-button">Rp100.000</button>
-                    <button class="amount-button">Rp120.000</button>
-                    <button class="amount-button">Rp150.000</button>
-                    <button class="amount-button">Rp180.000</button>
-                    <button class="amount-button">Rp200.000</button>
-                </div>
-            </div>
+                <div class="amount-container">
+                    <div class="amount-input-container">
+                        <input type="text" name="nominal" id="nominalInput" class="amount-input" placeholder="Rp 0" required />
+                        <span class="edit-icon">✏️</span>
+                    </div>
 
-            <button class="btn-submit">Transfer</button>
-            <p class="cancel-button" onclick="window.location.href='{{ route('transfer-topup.index') }}'">Batalkan</p>
-        </div>
+                    <div class="amount-buttons">
+                        <button type="button" class="amount-button">Rp20.000</button>
+                        <button type="button" class="amount-button">Rp50.000</button>
+                        <button type="button" class="amount-button">Rp80.000</button>
+                        <button type="button" class="amount-button">Rp100.000</button>
+                        <button type="button" class="amount-button">Rp120.000</button>
+                        <button type="button" class="amount-button">Rp150.000</button>
+                        <button type="button" class="amount-button">Rp180.000</button>
+                        <button type="button" class="amount-button">Rp200.000</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Transfer</button>
+                <p class="cancel-button" onclick="window.location.href='{{ route('transfer-topup.index') }}'">Batalkan</p>
+            </div>
+        </form>
     </main>
 
     <script>
@@ -274,6 +277,22 @@
             } else {
                 this.value = '';
             }
+        });
+
+        // Form Submission Handler
+        document.getElementById('topupForm').addEventListener('submit', function(e) {
+            // Prevent default form submission
+            e.preventDefault();
+
+            // Get the nominal value and remove 'Rp' and '.'
+            const nominalInput = document.getElementById('nominalInput');
+            const cleanNominal = nominalInput.value.replace('Rp', '').replace(/\./g, '').trim();
+
+            // Set the cleaned value back to the input
+            nominalInput.value = cleanNominal;
+
+            // Submit the form
+            this.submit();
         });
     </script>
 </body>
