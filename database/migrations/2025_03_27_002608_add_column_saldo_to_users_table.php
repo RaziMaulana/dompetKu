@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->decimal('saldo', 15, 2)->default(0)->after('phone');
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->decimal('saldo', 15, 2)->default(0)->after('phone')->nullable();
+        // });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('saldo');
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->dropColumn('saldo');
+        // });
     }
 };
