@@ -6,5 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class TopUp extends Model
 {
-    //
+    protected $fillable = [
+        'metode',
+        'metode_image',
+        'tujuan',
+        'nominal',
+        'pin',
+        'user_id'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
