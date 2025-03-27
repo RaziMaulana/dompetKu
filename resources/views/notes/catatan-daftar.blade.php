@@ -91,9 +91,9 @@
         }
 
         .date {
-            color: #7a8ca3;
+            color: #616871;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: bold;
         }
 
         .category {
@@ -121,11 +121,11 @@
             z-index: 10;
         }
 
-        .amount.income {
+        .amount.pemasukan {
             color: green;
         }
 
-        .amount.expense {
+        .amount.pengeluaran {
             color: red;
         }
 
@@ -156,61 +156,22 @@
                 placeholder="Catatan Apa Yang Ingin Dicari">
         </div>
 
-        <div class="expense-card">
-            <div class="abstract-lines">
-                <div class="line-1"></div>
-                <div class="line-2"></div>
-            </div>
-            <div class="card-header">
-                <span class="date">02/10/2024</span>
-                <span class="category">Makan</span>
-            </div>
-            <div class="description">Makan siang di warung pak mat</div>
-            <div class="amount">Rp 20.000,00</div>
-            {{-- <div class="amount {{ $isIncome ? 'income' : 'expense' }}">Rp 20.000,00</div> --}}
-        </div>
-
-        <div class="expense-card">
-            <div class="abstract-lines">
-                <div class="line-1"></div>
-                <div class="line-2"></div>
-            </div>
-            <div class="card-header">
-                <span class="date">02/10/2024</span>
-                <span class="category">Makan</span>
-            </div>
-            <div class="description">Makan siang di warung pak mat</div>
-            <div class="amount">Rp 20.000,00</div>
-            {{-- <div class="amount {{ $isIncome ? 'income' : 'expense' }}">Rp 20.000,00</div> --}}
-        </div>
-
-        <div class="expense-card">
-            <div class="abstract-lines">
-                <div class="line-1"></div>
-                <div class="line-2"></div>
-            </div>
-            <div class="card-header">
-                <span class="date">02/10/2024</span>
-                <span class="category">Makan</span>
-            </div>
-            <div class="description">Makan siang di warung pak mat</div>
-            <div class="amount">Rp 20.000,00</div>
-            {{-- <div class="amount {{ $isIncome ? 'income' : 'expense' }}">Rp 20.000,00</div> --}}
-        </div>
-
-        <div class="expense-card">
-            <div class="abstract-lines">
-                <div class="line-1"></div>
-                <div class="line-2"></div>
-            </div>
-            <div class="card-header">
-                <span class="date">02/10/2024</span>
-                <span class="category">Makan</span>
-            </div>
-            <div class="description">Makan siang di warung pak mat</div>
-            <div class="amount">Rp 20.000,00</div>
-            {{-- <div class="amount {{ $isIncome ? 'income' : 'expense' }}">Rp 20.000,00</div> --}}
-        </div>
+        @foreach ($catatans as $catatan)
+            <div class="expense-card">
+                <div class="abstract-lines">
+                    <div class="line-1"></div>
+                    <div class="line-2"></div>
+                </div>
+                <div class="card-header">
+                    <span class="date">{{ \Carbon\Carbon::parse($catatan->date)->format('d/m/Y') }}</span>
+                    <span class="category">{{ $catatan->category }}</span>
+                </div>
+                <div class="description">{{ $catatan->description }}</div>
+                <div class="amount {{ $catatan->type_transaction === 'pemasukan' ? 'pemasukan' : 'pengeluaran' }}">
+                    Rp {{ number_format($catatan->amount, 3, ',', '.') }}
+                </div>
+            </div> <br>
+        @endforeach
 
     </main>
 

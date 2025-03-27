@@ -105,39 +105,43 @@
             <div class="menu-tab {{ Request::routeIs('catatan-kategori.index') ? 'active' : '' }}" data-url="{{ route('catatan-kategori.index') }}">Kategori</div>
         </div>
 
-        <div class="form-container">
-            <div class="form-title">Tambah Catatan</div>
+        <form action="{{ route('catatan.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-container">
+                <div class="form-title">Tambah Catatan</div>
 
-            <div class="input-wrapper">
-                <input type="text" placeholder="Hari/Tanggal"/>
-                <span class="input-icon">📅</span>
-            </div>
-
-            <div class="input-wrapper">
-                <div class="half-input">
-                    <select>
-                        <option>Jenis Transaksi</option>
-                    </select>
+                <div class="input-wrapper">
+                    <input type="date" name="date" placeholder="Hari/Tanggal" required />
+                    <span class="input-icon">📅</span>
                 </div>
-                <div class="half-input">
-                    <select>
-                        <option>Kategori</option>
-                    </select>
+
+                <div class="input-wrapper">
+                    <div class="half-input">
+                        <select name="type_transaction" required>
+                            <option value="">Jenis Transaksi</option>
+                            <option value="pemasukan">Pemasukan</option>
+                            <option value="pengeluaran">Pengeluaran</option>
+                        </select>
+                    </div>
+                    <div class="half-input">
+                        <input type="text" name="category" placeholder="Kategori" required />
+                    </div>
                 </div>
-            </div>
 
-            <div class="input-wrapper">
-                <input type="text" placeholder="Rp lxx.xxx" />
-                <span class="input-icon">💳</span>
-            </div>
+                <div class="input-wrapper">
+                    <input type="text" name="amount" placeholder="Rp lxx.xxx" required />
+                    <span class="input-icon">💳</span>
+                </div>
 
-            <div class="input-wrapper">
-                <input type="text" placeholder="Catatan" />
-                <span class="input-icon">✏️</span>
-            </div>
+                <div class="input-wrapper">
+                    <input type="text" name="description" placeholder="Catatan" />
+                    <span class="input-icon">✏️</span>
+                </div>
 
-            <button class="submit-button">Simpan</button>
-        </div>
+                <button class="submit-button">Simpan</button>
+            </div>
+        </form>
+
 
     </main>
 

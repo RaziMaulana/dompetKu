@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Catatan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,5 +21,14 @@ class DatabaseSeeder extends Seeder
             'phone' => '1234567890',
             'email' => 'test@example.com',
         ]);
+
+        Catatan::create([
+            'date' => '2025-03-27',
+            'type_transaction' => 'pemasukan',
+            'category' => 'Gaji',
+            'amount' => 50000,
+            'description' => 'Gaji bulan Maret 2025',
+        ]);
+
     }
 }

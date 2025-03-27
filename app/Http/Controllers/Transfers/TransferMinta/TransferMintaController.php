@@ -10,4 +10,9 @@ class TransferMintaController extends Controller
     public function TransferMintaIndex(){
         return view('transfers.transfer-minta');
     }
+
+    public function sharePage(){
+        return view('transfers.minta.transfer-share');
+    }
+
 }

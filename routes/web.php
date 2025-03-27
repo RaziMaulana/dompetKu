@@ -28,6 +28,7 @@ Route::prefix('transfer-kirim')->group(function () {
 
 Route::prefix('transfer-minta')->group(function () {
     Route::get('/', [TransferMintaController::class, 'TransferMintaIndex'])->middleware(['auth', 'verified'])->name('transfer-minta.index');
+    Route::get('/share-page', [TransferMintaController::class, 'sharePage'])->middleware(['auth', 'verified'])->name('share-page.index');
 });
 
 Route::prefix('transfer-topup')->group(function () {
@@ -48,6 +49,7 @@ Route::prefix('set-pin')->group(function () {
 // Catatan
 Route::prefix('catatan')->group(function () {
     Route::get('/', [CatatanController::class, 'index'])->middleware(['auth', 'verified'])->name('catatan.index');
+    Route::post('/catatan/store', [CatatanController::class, 'store'])->name('catatan.store');
 });
 
 Route::prefix('catatan-daftar')->group(function () {

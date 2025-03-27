@@ -291,7 +291,7 @@
             <!-- Balance Card -->
             <div class="balance-card">
                 <div class="balance-title">Saldo Dompetku</div>
-                <div class="balance-amount">Rp1.000.000</div>
+                <div class="balance-amount">Rp.{{ number_format(auth()->user()->saldo, 0, ',', '.') }}</div>
                 <div class="balance-info">Tersedia di Walletmu</div>
                 <div class="menu-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"

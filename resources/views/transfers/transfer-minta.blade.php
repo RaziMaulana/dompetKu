@@ -191,9 +191,9 @@
                 <p>“Matahari terbenam indah, angin sepoi-sepoi, burung berkicau <br> riang, hujan turun perlahan, senja merah, gelombang laut tenang, malam datang sunyi.”</p>
             </div>
 
-            <div class="share-container">
+            <a href="{{ route('share-page.index') }}" class="share-container">
                 <button class="share-btn">Bagi Kode QR</button>
-            </div>
+            </a>
 
         </div>
 
