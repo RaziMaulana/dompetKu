@@ -102,7 +102,7 @@
             </a>
         <a href="#" class="nav-item {{ Request::routeIs('activity') ? 'active' : '' }}">Aktivitas</a>
         <a href="{{ route('catatan.index') }}" class="nav-item {{ Request::routeIs('catatan.index') || Request::routeIs('catatan-daftar.index') || Request::routeIs('catatan-kategori.index') ? 'active' : '' }}">Catatan</a>
-        <a href="#" class="nav-item {{ Request::routeIs('investment') ? 'active' : '' }}">Investasi</a>
+        <a href="{{ route('investasi.index') }}" class="nav-item {{ Request::routeIs('investasi.index') ? 'active' : '' }}">Investasi</a>
         @endif
     </div>
     <div class="header-right">

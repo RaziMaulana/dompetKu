@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InvestasiController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CatatanDaftarController;
 use App\Http\Controllers\CatatanKategoriController;
@@ -93,6 +94,12 @@ Route::prefix('topup')->group(function () {
 });
 
 // Top UP End
+
+// Investasi
+
+Route::prefix('investasi')->group(function () {
+    Route::get('/', [InvestasiController::class, 'index'])->middleware(['auth', 'verified'])->name('investasi.index');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
