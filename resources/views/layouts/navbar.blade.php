@@ -86,6 +86,117 @@
     .icon-menu-content a:hover {
         background-color: #3498db;
     }
+
+    .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            display: none;
+        }
+
+        .profile-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100%;
+            background-color: white;
+            z-index: 101;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            padding: 30px;
+        }
+
+        .profile-sidebar.show {
+            transform: translateX(0);
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .profile-icon {
+            width: 110px;
+            height: 110px;
+            background-image: url('{{ asset('Image/dompetKu-logo.png') }}');
+            border-radius: 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-top: 30px;
+        }
+
+        .profile-info {
+            text-align: left;
+            width: 100%;
+            margin-left: 0;
+        }
+
+        .profile-info h2 {
+            font-weight: 500;
+            margin-bottom: 25px;
+            color: black;
+            margin-top: 20px;
+        }
+
+        .profile-info h3 {
+            margin-bottom: 10px;
+            font-weight: 300;
+            color: black;
+        }
+
+        .profile-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .notification-dropdown {
+            display: none; /* Sembunyikan secara default */
+            position: absolute;
+            top: 40px; /* Sesuaikan posisi dropdown */
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .notification-dropdown ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .notification-dropdown li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            color: black;
+            cursor: pointer;
+        }
+
+        .notification-dropdown li:last-child {
+            border-bottom: none;
+        }
+
+        .notification-dropdown li:hover {
+            background-color: #f5f5f5;
+        }
+
 </style>
 
 <div class="header">
@@ -105,7 +216,7 @@
         <a href="{{ route('investasi.index') }}" class="nav-item {{ Request::routeIs('investasi.index') ? 'active' : '' }}">Investasi</a>
         @endif
     </div>
-    <div class="header-right">
+    <div class="header-right" style="cursor: pointer;">
         <div class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -122,10 +233,12 @@
                 </path>
             </svg>
 
-            <div class="icon-menu-content">
-                <a href="#">Profile</a>
-                <a href="#">Settings</a>
-                <a href="#">Logout</a>
+            <div class="notification-dropdown">
+                <ul>
+                    <li>Notifikasi 1</li>
+                    <li>Notifikasi 2</li>
+                    <li>Notifikasi 3</li>
+                </ul>
             </div>
 
         </div>
@@ -141,26 +254,64 @@
                 style="color: white; text-decoration: none; cursor: pointer;">Login</a>
         @endif
     </div>
+
+    <div id="overlay" class="overlay"></div>
+
+    <div id="profileSidebar" class="profile-sidebar">
+        <div class="profile-header">
+            <img src="" class="profile-icon"></img>
+            <div class="profile-info">
+                <h2>{{  Auth::user()->name }}</h2>
+                <h3>Email</h3>
+                <p>{{ Auth::user()->email }}</p>
+                <h3>No Telepon</h3>
+                <p>{{  Auth::user()->phone }}</p>
+            </div>
+        </div>
+
+        <hr>
+
+    </div>
+
 </div>
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function() {
-        const iconMenu = document.querySelector('.icon-menu');
-        const iconMenuContent = document.querySelector('.icon-menu-content');
+        const iconMenu = document.querySelector('.icon-menu svg');
+        const overlay = document.getElementById('overlay');
+        const profileSidebar = document.getElementById('profileSidebar');
 
         iconMenu.addEventListener('click', function(event) {
             event.stopPropagation();
-            iconMenuContent.classList.toggle('show');
+            overlay.classList.add('active');
+            profileSidebar.classList.add('show');
         });
 
-        document.addEventListener('click', function() {
-            if (iconMenuContent.classList.contains('show')) {
-                iconMenuContent.classList.remove('show');
-            }
+        overlay.addEventListener('click', function() {
+            overlay.classList.remove('active');
+            profileSidebar.classList.remove('show');
         });
 
-        iconMenuContent.addEventListener('click', function(event) {
+        profileSidebar.addEventListener('click', function(event) {
             event.stopPropagation();
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const icon = document.querySelector('.icon');
+        const notificationDropdown = document.querySelector('.notification-dropdown');
+
+        icon.addEventListener('click', function (event) {
+            event.stopPropagation(); // Mencegah event bubbling
+            notificationDropdown.style.display =
+                notificationDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Sembunyikan dropdown jika klik di luar elemen
+        document.addEventListener('click', function () {
+            notificationDropdown.style.display = 'none';
+        });
+    });
+
 </script>
