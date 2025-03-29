@@ -257,21 +257,35 @@
 
     <div id="overlay" class="overlay"></div>
 
-    <div id="profileSidebar" class="profile-sidebar">
-        <div class="profile-header">
-            <img src="" class="profile-icon"></img>
-            <div class="profile-info">
-                <h2>{{  Auth::user()->name }}</h2>
-                <h3>Email</h3>
-                <p>{{ Auth::user()->email }}</p>
-                <h3>No Telepon</h3>
-                <p>{{  Auth::user()->phone }}</p>
+    @if (Auth::check())
+        <div id="profileSidebar" class="profile-sidebar">
+            <div class="profile-header">
+                <img src="" class="profile-icon"></img>
+                <div class="profile-info">
+                    <h2>{{ Auth::user()->name }}</h2>
+                    <h3>Email</h3>
+                    <p>{{ Auth::user()->email }}</p>
+                    <h3>No Telepon</h3>
+                    <p>{{ Auth::user()->phone }}</p>
+                </div>
             </div>
+
+            <hr>
+
         </div>
+    @else
+        <div id="profileSidebar" class="profile-sidebar">
+            <div class="profile-header">
+                <img src="" class="profile-icon"></img>
+                <div class="profile-info">
+                    <h2>Silahkan Login Terlebih Dahulu</h2>
+                </div>
+            </div>
 
-        <hr>
+            <hr>
 
-    </div>
+        </div>
+    @endif
 
 </div>
 
