@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html>
 <head>
     <title>Transfer | DompetKu</title>
     <style>
@@ -20,6 +20,7 @@
             text-align: center;
             cursor: pointer;
             font-weight: bold;
+            color: #666;
         }
 
         .menu-tab.active {
@@ -150,7 +151,6 @@
     @include('layouts.navbar')
 
     <main>
-
         <div class="tab-container">
             <div class="menu-tab {{ Request::routeIs('transfer-kirim.index') ? 'active' : '' }}"
                 data-url="{{ route('transfer-kirim.index') }}">Kirim</div>
@@ -206,7 +206,6 @@
                         </td>
                         <td width="25%">
                             <div class="transaction-status">
-
                                 Gopay
                             </div>
                         </td>
@@ -221,7 +220,6 @@
                         </td>
                         <td>
                             <div class="transaction-status">
-
                                 Mandiri
                             </div>
                         </td>
@@ -236,7 +234,6 @@
                         </td>
                         <td>
                             <div class="transaction-status">
-
                                 Gopay
                             </div>
                         </td>
@@ -251,7 +248,6 @@
                         </td>
                         <td>
                             <div class="transaction-status">
-
                                 Mandiri
                             </div>
                         </td>
@@ -262,27 +258,38 @@
                 </tbody>
             </table>
         </div> <br>
-
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const transferOptions = document.querySelectorAll('.transfer-option');
+            // Handle menu tab clicks
+            const menuTabs = document.querySelectorAll('.menu-tab');
+            menuTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    menuTabs.forEach(t => t.classList.remove('active'));
 
-            // Get CSRF token with fallback
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+
+                    // Navigate to the URL specified in data-url
+                    window.location.href = this.getAttribute('data-url');
+                });
+            });
+
+            // Handle transfer option clicks
+            const transferOptions = document.querySelectorAll('.transfer-option');
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
                 document.querySelector('meta[name="csrf_token"]')?.getAttribute('content') ||
                 '{{ csrf_token() }}';
 
             transferOptions.forEach(option => {
                 option.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent default navigation
+                    event.preventDefault();
 
-                    // Get image and text from data attributes
                     const imageUrl = this.getAttribute('data-image');
                     const text = this.getAttribute('data-text');
 
-                    // Send data to server via AJAX
                     fetch('{{ route('transfer-kirim.save') }}', {
                             method: 'POST',
                             headers: {
@@ -295,9 +302,7 @@
                             })
                         })
                         .then(response => {
-                            // Check if the response is OK
                             if (!response.ok) {
-                                // Try to parse error response
                                 return response.json().then(errData => {
                                     throw new Error(errData.message ||
                                         'Network response was not ok');
@@ -307,7 +312,6 @@
                         })
                         .then(data => {
                             if (data.success) {
-                                // Redirect to kirim index after saving
                                 window.location.href = '{{ route('kirim.index') }}';
                             } else {
                                 throw new Error(data.message || 'Unknown error occurred');
@@ -319,9 +323,23 @@
                         });
                 });
             });
+
+            // Handle filter tab clicks (Semua, E Wallet, Bank)
+            const filterTabs = document.querySelectorAll('.tabs .tab');
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all filter tabs
+                    filterTabs.forEach(t => t.classList.remove('active'));
+
+                    // Add active class to clicked filter tab
+                    this.classList.add('active');
+
+                    // Here you would typically filter the table results
+                    // For now we'll just log the selected filter
+                    console.log('Filter selected:', this.textContent);
+                });
+            });
         });
     </script>
-
 </body>
-
 </html>
