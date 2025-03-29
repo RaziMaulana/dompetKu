@@ -161,20 +161,20 @@
         </div>
 
         <div class="content">
-            <a class="transfer-option" href="{{ route('kirim.index') }}" data-image="{{ asset('image/dompetku2.png') }}"
-                data-text="DompetKu.">
+            <button class="transfer-option" href="{{ route('kirim.index') }}"
+                data-image="{{ asset('image/dompetku2.png') }}" data-text="DompetKu.">
                 <img src="{{ asset('image/dompetku2.png') }}" alt=""> DompetKu.
-            </a>
+            </button>
 
-            <a class="transfer-option" href="{{ route('kirim.index') }}"
+            <button class="transfer-option" href="{{ route('kirim.index') }}"
                 data-image="{{ asset('image/bank-logo.png') }}" data-text="Bank">
                 <img src="{{ asset('image/bank-logo.png') }}" alt=""> Bank
-            </a>
+            </button>
 
-            <a class="transfer-option" href="{{ route('kirim.index') }}"
+            <button class="transfer-option" href="{{ route('kirim.index') }}"
                 data-image="{{ asset('image/e-wallet.png') }}" data-text="E Wallet">
                 <img src="{{ asset('image/e-wallet.png') }}" alt=""> E Wallet
-            </a>
+            </button>
         </div>
 
         <div class="card">

@@ -10,6 +10,12 @@ class Kirim extends Model
         'gambar',
         'dikirim',
         'nominal',
-        'note'
+        'note',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

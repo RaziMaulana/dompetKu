@@ -9,13 +9,14 @@ use App\Http\Controllers\CatatanDaftarController;
 use App\Http\Controllers\CatatanKategoriController;
 use App\Http\Controllers\Transfers\PIN\PinController;
 use App\Http\Controllers\Transfers\Transaksi\TopUp\TopUpController;
-use App\Http\Controllers\Transfers\Transaksi\kirim\TransaksiKirimController;
 use App\Http\Controllers\Transfers\Transaksi\TopUp\CheckPinController;
 use App\Http\Controllers\Transfers\TransferKirim\TransferKirimController;
 use App\Http\Controllers\Transfers\TransferMinta\TransferMintaController;
 use App\Http\Controllers\Transfers\TransferTopUp\TransferTopUpController;
+use App\Http\Controllers\Transfers\Transaksi\kirim\KirimSucceedController;
 use App\Http\Controllers\Transfers\Transaksi\TopUp\TopupSucceedController;
-
+use App\Http\Controllers\Transfers\Transaksi\kirim\TransaksiKirimController;
+use App\Http\Controllers\Transfers\Transaksi\kirim\KirimConfirmationController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -103,7 +104,26 @@ Route::prefix('topup')->group(function () {
 
 Route::prefix('kirim')->group(function () {
     Route::get('/', [TransaksiKirimController::class, 'TransaksiKirimIndex'])->middleware(['auth', 'verified'])->name('kirim.index');
+    Route::post('/store', [TransaksiKirimController::class, 'store'])->middleware(['auth', 'verified'])->name('kirim.store');
 });
+
+// confirmation
+
+Route::prefix('kirim-confirmation')->group(function () {
+    Route::get('/', [KirimConfirmationController::class, 'KirimConfirmationIndex'])->middleware(['auth', 'verified'])->name('kirim-confirmation.index');
+    Route::post('/fill-status', [KirimConfirmationController::class, 'FillStatus'])->middleware(['auth', 'verified'])->name('kirim-confirmation.FillStatus');
+
+});
+
+// confirmation end
+
+// Kirim Succeed
+
+Route::prefix('kirim-succeed')->group(function () {
+    Route::get('/', [KirimSucceedController::class, 'KirimSucceedIndex'])->middleware(['auth', 'verified'])->name('kirim-succeed.index');
+});
+
+// Kirim Succeed End
 
 // Kirim end
 
