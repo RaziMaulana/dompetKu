@@ -152,25 +152,29 @@
     <main>
 
         <div class="tab-container">
-            <div class="menu-tab {{ Request::routeIs('transfer-kirim.index') ? 'active' : '' }}" data-url="{{ route('transfer-kirim.index') }}">Kirim</div>
-            <div class="menu-tab {{ Request::routeIs('transfer-minta.index') ? 'active' : '' }}" data-url="{{ route('transfer-minta.index') }}">Minta</div>
-            <div class="menu-tab {{ Request::routeIs('transfer-topup.index') ? 'active' : '' }}" data-url="{{ route('transfer-topup.index') }}">Top up</div>
+            <div class="menu-tab {{ Request::routeIs('transfer-kirim.index') ? 'active' : '' }}"
+                data-url="{{ route('transfer-kirim.index') }}">Kirim</div>
+            <div class="menu-tab {{ Request::routeIs('transfer-minta.index') ? 'active' : '' }}"
+                data-url="{{ route('transfer-minta.index') }}">Minta</div>
+            <div class="menu-tab {{ Request::routeIs('transfer-topup.index') ? 'active' : '' }}"
+                data-url="{{ route('transfer-topup.index') }}">Top up</div>
         </div>
 
         <div class="content">
-
-            <button class="transfer-option">
+            <a class="transfer-option" href="{{ route('kirim.index') }}" data-image="{{ asset('image/dompetku2.png') }}"
+                data-text="DompetKu.">
                 <img src="{{ asset('image/dompetku2.png') }}" alt=""> DompetKu.
-            </button>
+            </a>
 
-            <button class="transfer-option">
+            <a class="transfer-option" href="{{ route('kirim.index') }}"
+                data-image="{{ asset('image/bank-logo.png') }}" data-text="Bank">
                 <img src="{{ asset('image/bank-logo.png') }}" alt=""> Bank
-            </button>
+            </a>
 
-            <button class="transfer-option">
+            <a class="transfer-option" href="{{ route('kirim.index') }}"
+                data-image="{{ asset('image/e-wallet.png') }}" data-text="E Wallet">
                 <img src="{{ asset('image/e-wallet.png') }}" alt=""> E Wallet
-            </button>
-
+            </a>
         </div>
 
         <div class="card">
@@ -262,12 +266,57 @@
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tabs = document.querySelectorAll('.menu-tab');
+        document.addEventListener('DOMContentLoaded', function() {
+            const transferOptions = document.querySelectorAll('.transfer-option');
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function () {
-                    window.location.href = tab.getAttribute('data-url');
+            // Get CSRF token with fallback
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
+                document.querySelector('meta[name="csrf_token"]')?.getAttribute('content') ||
+                '{{ csrf_token() }}';
+
+            transferOptions.forEach(option => {
+                option.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default navigation
+
+                    // Get image and text from data attributes
+                    const imageUrl = this.getAttribute('data-image');
+                    const text = this.getAttribute('data-text');
+
+                    // Send data to server via AJAX
+                    fetch('{{ route('transfer-kirim.save') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken
+                            },
+                            body: JSON.stringify({
+                                gambar: imageUrl,
+                                dikirim: text
+                            })
+                        })
+                        .then(response => {
+                            // Check if the response is OK
+                            if (!response.ok) {
+                                // Try to parse error response
+                                return response.json().then(errData => {
+                                    throw new Error(errData.message ||
+                                        'Network response was not ok');
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                // Redirect to kirim index after saving
+                                window.location.href = '{{ route('kirim.index') }}';
+                            } else {
+                                throw new Error(data.message || 'Unknown error occurred');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan: ' + error.message);
+                        });
                 });
             });
         });

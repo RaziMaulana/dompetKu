@@ -9,11 +9,13 @@ use App\Http\Controllers\CatatanDaftarController;
 use App\Http\Controllers\CatatanKategoriController;
 use App\Http\Controllers\Transfers\PIN\PinController;
 use App\Http\Controllers\Transfers\Transaksi\TopUp\TopUpController;
+use App\Http\Controllers\Transfers\Transaksi\kirim\TransaksiKirimController;
 use App\Http\Controllers\Transfers\Transaksi\TopUp\CheckPinController;
 use App\Http\Controllers\Transfers\TransferKirim\TransferKirimController;
 use App\Http\Controllers\Transfers\TransferMinta\TransferMintaController;
 use App\Http\Controllers\Transfers\TransferTopUp\TransferTopUpController;
 use App\Http\Controllers\Transfers\Transaksi\TopUp\TopupSucceedController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -27,6 +29,7 @@ Route::get('/', function () {
 
 Route::prefix('transfer-kirim')->group(function () {
     Route::get('/', [TransferKirimController::class, 'TransferKirimIndex'])->middleware(['auth', 'verified'])->name('transfer-kirim.index');
+    Route::post('/save', [TransferKirimController::class, 'saveTransferOption'])->middleware(['auth', 'verified'])->name('transfer-kirim.save');
 });
 
 Route::prefix('transfer-minta')->group(function () {
@@ -87,6 +90,7 @@ Route::prefix('catatan-kategori')->group(function () {
 // Catatan End
 
 // Top UP
+
 Route::prefix('topup')->group(function () {
     Route::get('/', [TransferTopUpController::class, 'TransaksiTopUp'])->middleware(['auth', 'verified'])->name('topup.index');
     Route::post('/pilih-metode', [TransferTopUpController::class, 'PilihMetodeTopUp'])->middleware(['auth', 'verified'])->name('topup.pilih-metode');
@@ -94,6 +98,14 @@ Route::prefix('topup')->group(function () {
 });
 
 // Top UP End
+
+// Kirim
+
+Route::prefix('kirim')->group(function () {
+    Route::get('/', [TransaksiKirimController::class, 'TransaksiKirimIndex'])->middleware(['auth', 'verified'])->name('kirim.index');
+});
+
+// Kirim end
 
 // Investasi
 
