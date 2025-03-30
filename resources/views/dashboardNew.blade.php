@@ -379,63 +379,6 @@
                             <div class="transaction-amount negative">-Rp26.000,00</div>
                         </td>
                     </tr>
-
-                    <tr>
-                        <td>
-                            <div class="transaction-name">John Doe</div>
-                        </td>
-                        <td>
-                            <div class="transaction-status">
-                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18"
-                                    height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                                Selesai
-                            </div>
-                        </td>
-                        <td>
-                            <div class="transaction-amount positive">+Rp5.000.000,00</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="transaction-name">Fatur Al Khafi</div>
-                        </td>
-                        <td>
-                            <div class="transaction-status">
-                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18"
-                                    height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                                Selesai
-                            </div>
-                        </td>
-                        <td>
-                            <div class="transaction-amount negative">-Rp26.000,00</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="transaction-name">Dr Tirta</div>
-                        </td>
-                        <td>
-                            <div class="transaction-status">
-                                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18"
-                                    height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                                Selesai
-                            </div>
-                        </td>
-                        <td>
-                            <div class="transaction-amount negative">-Rp26.000,00</div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div> <br>

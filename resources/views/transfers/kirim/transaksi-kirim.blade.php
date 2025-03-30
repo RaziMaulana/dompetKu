@@ -177,6 +177,24 @@
                 <a class="text-primary mt-3 fs-6 link-underline link-underline-opacity-0" href="{{ route('transfer-kirim.index') }}">Batalkan</a>
             </form>
 
+            <!-- Modal Peringatan -->
+            <div class="modal fade" id="insufficientBalanceModal" tabindex="-1" aria-labelledby="insufficientBalanceModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="insufficientBalanceModalLabel">Saldo Tidak Cukup</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Maaf, saldo Anda tidak mencukupi untuk melakukan transfer. Silakan isi saldo terlebih dahulu.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <a href="{{ route('transfer-topup.index') }}" class="btn btn-primary">Isi Saldo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -188,6 +206,7 @@
             const nextButton = document.getElementById('nextButton');
             const kirimIdInput = document.getElementById('kirimId');
             const transferForm = document.getElementById('transferForm');
+            const userSaldo = {{ Auth::user()->saldo }}; // Ambil saldo pengguna dari server
 
             // Debugging untuk memastikan elemen ditemukan
             console.log(amountInput); // Pastikan ini tidak null
@@ -214,13 +233,19 @@
             nextButton.addEventListener('click', function(e) {
                 e.preventDefault(); // Cegah pengiriman form default
 
-                const amount = amountInput.value.replace(/\D/g, ''); // Ambil nilai nominal tanpa format
-                const notes = notesInput.value; // Ambil nilai catatan
-                const kirimId = kirimIdInput.value; // Ambil ID kirim
+                const amount = parseInt(amountInput.value.replace(/\D/g, ''), 10); // Ambil nilai nominal tanpa format
 
                 // Validasi nominal
-                if (!amount || parseInt(amount) <= 0) {
+                if (!amount || amount <= 0) {
                     alert('Masukkan nominal yang valid!');
+                    return;
+                }
+
+                // Validasi saldo
+                if (amount > userSaldo) {
+                    // Tampilkan modal jika saldo tidak mencukupi
+                    const insufficientBalanceModal = new bootstrap.Modal(document.getElementById('insufficientBalanceModal'));
+                    insufficientBalanceModal.show();
                     return;
                 }
 
