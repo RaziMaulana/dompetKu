@@ -199,19 +199,6 @@
                             <div class="card-subtitle">Dompetku {{ Auth::user()->phone }}</div>
                         </div>
                     </div>
-                    @if(session('metode_topup'))
-                        <div class="card">
-                            <div class="card-icon">
-                                <img src="{{ session('metode_topup.icon') }}" alt="{{ session('metode_topup.nama') }} Icon" style="width: 48px; height: 48px; border-radius: 10px;">
-                            </div>
-                            <div class="card-content">
-                                <div class="card-title">{{ session('metode_topup.nama') }}</div>
-                                <div class="card-subtitle">{{ session('metode_topup.nomor') }}</div>
-                            </div>
-                        </div>
-                    @else
-                    {{--  --}}
-                    @endif
                 </div>
 
                 <div class="amount-container">
@@ -221,78 +208,99 @@
                     </div>
 
                     <div class="amount-buttons">
-                        <button type="button" class="amount-button">Rp20.000</button>
-                        <button type="button" class="amount-button">Rp50.000</button>
-                        <button type="button" class="amount-button">Rp80.000</button>
-                        <button type="button" class="amount-button">Rp100.000</button>
-                        <button type="button" class="amount-button">Rp120.000</button>
-                        <button type="button" class="amount-button">Rp150.000</button>
-                        <button type="button" class="amount-button">Rp180.000</button>
-                        <button type="button" class="amount-button">Rp200.000</button>
+                        <button type="button" value="20000" class="amount-button">Rp20.000</button>
+                        <button type="button" value="50000" class="amount-button">Rp50.000</button>
+                        <button type="button" value="80000" class="amount-button">Rp80.000</button>
+                        <button type="button" value="100000" class="amount-button">Rp100.000</button>
+                        <button type="button" value="120000" class="amount-button">Rp120.000</button>
+                        <button type="button" value="150000" class="amount-button">Rp150.000</button>
+                        <button type="button" value="180000" class="amount-button">Rp180.000</button>
+                        <button type="button" value="200000" class="amount-button">Rp200.000</button>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit">Transfer</button>
+                <button type="submit" class="btn-submit">Top Up</button>
                 <p class="cancel-button" onclick="window.location.href='{{ route('transfer-topup.index') }}'">Batalkan</p>
             </div>
         </form>
     </main>
 
     <script>
-        // Menu Tab Navigation
-        const menuTab = document.querySelectorAll('.menu-tab');
-        menuTab.forEach(tab => {
-            tab.addEventListener('click', function() {
-                window.location.href = tab.getAttribute('data-url');
-            });
-        });
-
-        // Amount Input Functionality
-        const amountInput = document.querySelector('.amount-input');
-        const amountButtons = document.querySelectorAll('.amount-button');
-
-        amountButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove 'Rp' and '.' from the button text to create a clean number
-                const amount = this.textContent.replace('Rp', '').replace(/\./g, '');
-
-                // Format the number with dots as thousand separators
-                amountInput.value = `Rp ${formatNumberWithDots(amount)}`;
-            });
-        });
-
-        // Function to add dots as thousand separators
-        function formatNumberWithDots(number) {
-            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-
-        // Optional: Allow manual editing with proper formatting
-        amountInput.addEventListener('input', function() {
-            // Remove all non-digit characters
-            let numberOnly = this.value.replace(/\D/g, '');
-
-            // Ensure the input always starts with Rp
-            if (numberOnly) {
-                this.value = `Rp ${formatNumberWithDots(numberOnly)}`;
-            } else {
-                this.value = '';
+        document.addEventListener('DOMContentLoaded', function () {
+            // Menu Tab Navigation
+            const menuTab = document.querySelectorAll('.menu-tab');
+            if (menuTab) {
+                menuTab.forEach(tab => {
+                    tab.addEventListener('click', function () {
+                        const url = tab.getAttribute('data-url');
+                        if (url) {
+                            window.location.href = url;
+                        }
+                    });
+                });
             }
-        });
 
-        // Form Submission Handler
-        document.getElementById('topupForm').addEventListener('submit', function(e) {
-            // Prevent default form submission
-            e.preventDefault();
+            // Amount Input Functionality
+            const amountInput = document.querySelector('.amount-input');
+            const amountButtons = document.querySelectorAll('.amount-button');
 
-            // Get the nominal value and remove 'Rp' and '.'
-            const nominalInput = document.getElementById('nominalInput');
-            const cleanNominal = nominalInput.value.replace('Rp', '').replace(/\./g, '').trim();
+            if (amountInput && amountButtons) {
+                amountButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // Remove 'Rp' and '.' from the button text to create a clean number
+                        const amount = this.value.replace(/\D/g, ''); // Use button value instead of textContent
 
-            // Set the cleaned value back to the input
-            nominalInput.value = cleanNominal;
+                        // Format the number with dots as thousand separators
+                        amountInput.value = `Rp ${formatNumberWithDots(amount)}`;
+                    });
+                });
 
-            // Submit the form
-            this.submit();
+                // Allow manual editing with proper formatting
+                amountInput.addEventListener('input', function () {
+                    // Remove all non-digit characters
+                    let numberOnly = this.value.replace(/\D/g, '');
+
+                    // Ensure the input always starts with Rp
+                    if (numberOnly) {
+                        this.value = `Rp ${formatNumberWithDots(numberOnly)}`;
+                    } else {
+                        this.value = '';
+                    }
+                });
+            }
+
+            // Function to add dots as thousand separators
+            function formatNumberWithDots(number) {
+                if (!number) return '0'; // Handle empty or invalid input
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+
+            // Form Submission Handler
+            const topupForm = document.getElementById('topupForm');
+            if (topupForm) {
+                topupForm.addEventListener('submit', function (e) {
+                    // Prevent default form submission
+                    e.preventDefault();
+
+                    // Get the nominal value and remove 'Rp' and '.'
+                    const nominalInput = document.getElementById('nominalInput');
+                    if (nominalInput) {
+                        const cleanNominal = nominalInput.value.replace('Rp', '').replace(/\./g, '').trim();
+
+                        // Validate nominal is not empty or zero
+                        if (!cleanNominal || isNaN(cleanNominal) || parseInt(cleanNominal) <= 0) {
+                            alert('Masukkan nominal yang valid!');
+                            return;
+                        }
+
+                        // Set the cleaned value back to the input
+                        nominalInput.value = cleanNominal;
+
+                        // Submit the form
+                        this.submit();
+                    }
+                });
+            }
         });
     </script>
 </body>

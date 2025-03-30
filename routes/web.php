@@ -40,6 +40,7 @@ Route::prefix('transfer-minta')->group(function () {
 
 Route::prefix('transfer-topup')->group(function () {
     Route::get('/', [TransferTopUpController::class, 'TransferTopUpIndex'])->middleware(['auth', 'verified'])->name('transfer-topup.index');
+    Route::post('/transaksi-topup/store', [TopUpController::class, 'TopUpTransactionStore'])->name('transaksi-topup.store');
 });
 
 // Transaksi Top-Up

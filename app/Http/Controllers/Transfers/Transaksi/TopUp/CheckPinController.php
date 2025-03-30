@@ -16,31 +16,37 @@ class CheckPinController extends Controller
     }
 
     public function verifyPin(Request $request)
-    {
-        // Validate the PIN input
-        $request->validate([
-            'pin' => 'required|digits:6'
-        ]);
+{
+    // Validate the PIN input
+    $request->validate([
+        'pin' => 'required|digits:6',
+    ]);
 
-        // Get the currently authenticated user
-        $user = Auth::user();
+    // Get the currently authenticated user
+    $user = Auth::user();
 
-        // Check if the entered PIN matches the user's stored PIN
-        if ($user->pin && Hash::check($request->pin, $user->pin)) {
+    // Check if the entered PIN matches the user's stored PIN
+    if ($user->pin && Hash::check($request->pin, $user->pin)) {
+        // Find or create TopUp record for the user
+        $topUp = TopUp::where('user_id', $user->id)
+            ->whereNull('pin')
+            ->latest()
+            ->first();
+
+        if (!$topUp) {
             // Find or create TopUp record for the user
-            $topUp = TopUp::firstOrNew([
-                'user_id' => $user->id
-            ]);
-
-            // Copy the PIN from user table to TopUp table
-            $topUp->pin = $user->pin;
-            $topUp->save();
-
-            // Redirect to the next page (replace with your actual route)
-            return redirect()->route('topup-succeed.index')->with('success', 'PIN berhasil diverifikasi');
-        } else {
-            // PIN is incorrect
-            return back()->with('error', 'PIN yang Anda masukkan salah');
+            return redirect()->route('transaksi-topup.index')->with('error', 'Tidak ada transaksi top-up yang ditemukan.');
         }
+
+        // Copy the PIN from user table to TopUp table
+        $topUp->pin = $request->pin;
+        $topUp->save();
+
+        // Redirect to the next page (replace with your actual route)
+        return redirect()->route('topup-succeed.index')->with('success', 'PIN berhasil diverifikasi');
+    } else {
+        // PIN is incorrect
+        return back()->with('error', 'PIN yang Anda masukkan salah');
     }
+}
 }

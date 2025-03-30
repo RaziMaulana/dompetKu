@@ -15,21 +15,25 @@ class TopUpController extends Controller
 
     public function TopUpTransactionStore(Request $request)
     {
+        // Validasi input
         $validatedData = $request->validate([
-            'nominal' => 'required|numeric|min:1'
+            'nominal' => 'required|numeric|min:1',
         ]);
 
         // Find an existing incomplete top-up for the user
+        // dd($request->all());
+
+        $formattedNominal = number_format($validatedData['nominal'], 0, ',', '.');
+
         $existingTopUp = TopUp::where('user_id', Auth::id())
             ->whereNull('pin')
             ->first();
 
         if ($existingTopUp) {
             // Update existing incomplete top-up
-            $existingTopUp->nominal = $validatedData['nominal'];
+            $existingTopUp->nominal = $formattedNominal;
             $existingTopUp->save();
 
-            // Redirect to pin check with the existing top-up
             return redirect()->route('check-pin.index')->with([
                 'success' => 'Top up berhasil',
                 'topup_id' => $existingTopUp->id
@@ -39,7 +43,7 @@ class TopUpController extends Controller
         // Create a new TopUp record if no incomplete top-up exists
         $topup = new TopUp();
         $topup->user_id = Auth::id();
-        $topup->nominal = $validatedData['nominal'];
+        $topup->nominal = $formattedNominal;
         $topup->save();
 
         // Redirect to pin check
