@@ -127,6 +127,12 @@
         .next-button:hover {
             background-color: #0056b3;
         }
+
+        .group-teks {
+            display: flex;
+            justify-content: space-between;
+        }
+
     </style>
 </head>
 
@@ -135,38 +141,43 @@
     <div class="center-container">
         <div class="balance-card p-5">
             <div class="user-info">
-                <div class="user-name">Raditya Anugrah Sagitaris</div>
-                <div class="user-phone">Gopay 0811 2233 4455</div>
-            </div>
-            <!-- Currency formatted amount input field -->
-            <div class="balance-option">
-                <div class="input-group">
-                    <input type="text" class="form-control amount-input" id="amountInput" placeholder="RP 0"
-                        inputmode="numeric">
+                <div class="user-name">{{ Auth::user()->name }}</div>
+                <div class="group-teks">
+                    <div class="user-phone">Gopay {{ Auth::user()->phone }}</div>
+                    <div>Saldo Anda Rp{{ number_format(Auth::user()->saldo, 0, ',', '.') }}</div>
                 </div>
-                <div class="wallet-balance-container mt-3">
-                    @foreach ($kirim as $kirim)
-                        <div class="wallet-item" style="display: flex; align-items : center; margin-bottom: 10px;">
-                            <img src="{{ $kirim->gambar }}" alt="Wallet Image" class="img-fluid"
-                                style="max-width: 40px; margin-right: 10px;">
-                            <span class="wallet-label">Saldo <strong>{{ $kirim->dikirim }}</strong></span>
-                        </div>
-                    @endforeach
+            </div>
 
-                    @foreach ($topUps as $topUp)
-                        <span class="wallet-amount">Rp{{ number_format($topUp->nominal, 0, ',', '.') }}</span>
-                    @endforeach
+            <form id="transferForm" action="{{ route('kirim.store') }}" method="POST">
+                @csrf
+                <!-- Currency formatted amount input field -->
+                    <div class="balance-option">
+                        <div class="input-group">
+                            <input type="text" class="form-control amount-input" id="amountInput" name="nominal" placeholder="RP 0"
+                                inputmode="numeric" required>
+                        </div>
+                        <div class="wallet-balance-container mt-3">
+                            @foreach ($kirim as $kirim)
+                                <div class="wallet-item" style="display: flex; align-items : center; margin-bottom: 10px;">
+                                    <img src="{{ $kirim->gambar }}" alt="Wallet Image" class="img-fluid"
+                                        style="max-width: 40px; margin-right: 10px;">
+                                    <span class="wallet-label">Saldo <strong>{{ $kirim->dikirim }}</strong></span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <!-- Larger notes input field -->
+                    <div class="balance-option">
+                        <input type="text" class="form-control large-input" id="notes" name="note" placeholder="Catatan (Opsional)">
+                    </div>
                 </div>
-            </div>
-            <!-- Larger notes input field -->
-            <div class="balance-option">
-                <input type="text" class="form-control large-input" id="notes" placeholder="Catatan (Opsional)">
-            </div>
-        </div>
-        <!-- Input hidden untuk menyimpan ID kirim -->
-        <input type="hidden" id="kirimId" value="{{ $kirim->id }}">
-        <button class="next-button w-50 rounded-pill" id="nextButton"><strong>Berikutnya</strong></button>
-        <a class="text-primary mt-3 fs-6 link-underline link-underline-opacity-0" href="{{ route('transfer-kirim.index') }}">Batalkan</a>
+                <!-- Input hidden untuk menyimpan ID kirim -->
+                <input type="hidden" id="kirimId" name="id" value="{{ $kirim->id }}">
+                <button type="submit" class="next-button w-50 rounded-pill" id="nextButton"><strong>Berikutnya</strong></button>
+                <a class="text-primary mt-3 fs-6 link-underline link-underline-opacity-0" href="{{ route('transfer-kirim.index') }}">Batalkan</a>
+            </form>
+
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -176,57 +187,48 @@
             const notesInput = document.getElementById('notes');
             const nextButton = document.getElementById('nextButton');
             const kirimIdInput = document.getElementById('kirimId');
+            const transferForm = document.getElementById('transferForm');
 
-            // Debugging
+            // Debugging untuk memastikan elemen ditemukan
             console.log(amountInput); // Pastikan ini tidak null
             console.log(notesInput);  // Pastikan ini tidak null
             console.log(nextButton);  // Pastikan ini tidak null
             console.log(kirimIdInput); // Pastikan ini tidak null
+            console.log(transferForm); // Pastikan ini tidak null
 
-            if (!amountInput || !notesInput || !nextButton || !kirimIdInput) {
+            if (!amountInput || !notesInput || !nextButton || !kirimIdInput || !transferForm) {
                 console.error('Salah satu elemen tidak ditemukan!');
                 return;
             }
 
-            // Format the input as currency
+            // Format input nominal sebagai mata uang
             amountInput.addEventListener('input', function(e) {
-                let value = this.value.replace(/\D/g, '');
+                let value = this.value.replace(/\D/g, ''); // Hapus karakter non-digit
                 if (value !== '') {
-                    value = parseInt(value, 10).toLocaleString('id-ID');
+                    value = parseInt(value, 10).toLocaleString('id-ID'); // Format angka
                 }
                 this.value = value;
             });
 
-            // Handle next button click
-            nextButton.addEventListener('click', function() {
-                const amount = amountInput.value.replace(/\D/g, '');
-                const notes = notesInput.value;
-                const kirimId = kirimIdInput.value; // Ambil nilai ID
+            // Tangani klik tombol "Berikutnya"
+            nextButton.addEventListener('click', function(e) {
+                e.preventDefault(); // Cegah pengiriman form default
 
-                // Send data to server
-                fetch('/kirim/store', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        id: kirimId, // Kirim ID
-                        nominal: amount,
-                        note: notes
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = "{{ route('kirim-confirmation.index') }}";
-                    } else {
-                        alert('Gagal menyimpan data.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                const amount = amountInput.value.replace(/\D/g, ''); // Ambil nilai nominal tanpa format
+                const notes = notesInput.value; // Ambil nilai catatan
+                const kirimId = kirimIdInput.value; // Ambil ID kirim
+
+                // Validasi nominal
+                if (!amount || parseInt(amount) <= 0) {
+                    alert('Masukkan nominal yang valid!');
+                    return;
+                }
+
+                // Set nilai bersih ke input sebelum submit
+                amountInput.value = amount;
+
+                // Kirim form
+                transferForm.submit();
             });
         });
     </script>

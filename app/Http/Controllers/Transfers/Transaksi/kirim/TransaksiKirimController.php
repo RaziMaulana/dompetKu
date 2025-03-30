@@ -25,24 +25,32 @@ class TransaksiKirimController extends Controller
     // Menyimpan atau mengupdate data kirim
     public function store(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:kirims,id', // Pastikan ID ada di tabel kirims
-            'nominal' => 'required|numeric',
+        // Validasi input
+        $validatedData = $request->validate([
+            'id' => 'required|exists:kirims,id',
+            'nominal' => 'required|numeric|min:1',
             'note' => 'nullable|string',
         ]);
 
-        // Cari baris yang ingin diupdate
-        $kirim = Kirim::find($request->id);
+        // Ambil pengguna yang sedang login
+        $user = Auth::user();
 
-        if (!$kirim) {
-            return response()->json(['success' => false, 'message' => 'Data tidak ditemukan'], 404);
+        // Periksa apakah saldo mencukupi
+        if ($user->saldo < $validatedData['nominal']) {
+            return redirect()->back()->with('error', 'Saldo tidak mencukupi untuk melakukan transfer.');
         }
 
-        // Update data
-        $kirim->nominal = $request->nominal;
-        $kirim->note = $request->note;
+        // Kurangi saldo pengguna
+        $user->saldo -= $validatedData['nominal'];
+        $user->save();
+
+        // Simpan data transfer ke tabel `kirims`
+        $kirim = Kirim::find($validatedData['id']);
+        $kirim->nominal = $validatedData['nominal'];
+        $kirim->note = $validatedData['note'];
+        $kirim->status = 'pending'; // Status default
         $kirim->save();
 
-        return response()->json(['success' => true]);
+        return redirect()->route('kirim-confirmation.index')->with('success', 'Transfer berhasil dilakukan.');
     }
 }

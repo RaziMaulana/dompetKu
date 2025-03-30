@@ -208,10 +208,9 @@
             class="nav-item {{ Request::routeIs('dashboard-new') ? 'active' : '' }}">Beranda</a>
         @if (Auth::check())
             <a href="{{ Auth::user()->pin ? route('transfer-kirim.index') : route('set-pin') }}"
-                class="nav-item {{ Request::routeIs('transfer-kirim.index') || Request::routeIs('transfer-minta.index') || Request::routeIs('transfer-topup.index') || Request::routeIs('transaksi-topup') || Request::routeIs('share-page.index') ? 'active' : '' }}">
+                class="nav-item {{ Request::routeIs('transfer-kirim.index') || Request::routeIs('transfer-minta.index') || Request::routeIs('transfer-topup.index') || Request::routeIs('transaksi-topup') || Request::routeIs('share-page.index') || Request::routeIs('kirim.index') || Request::routeIs('check-pin.verify') ? 'active' : '' }}">
                 Transfer
             </a>
-        <a href="#" class="nav-item {{ Request::routeIs('activity') ? 'active' : '' }}">Aktivitas</a>
         <a href="{{ route('catatan.index') }}" class="nav-item {{ Request::routeIs('catatan.index') || Request::routeIs('catatan-daftar.index') || Request::routeIs('catatan-kategori.index') ? 'active' : '' }}">Catatan</a>
         <a href="{{ route('investasi.index') }}" class="nav-item {{ Request::routeIs('investasi.index') ? 'active' : '' }}">Investasi</a>
         @endif

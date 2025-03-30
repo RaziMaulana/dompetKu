@@ -34,6 +34,11 @@ class TopUpController extends Controller
             $existingTopUp->nominal = $formattedNominal;
             $existingTopUp->save();
 
+            $user = Auth::user();
+            $user->saldo += $validatedData['nominal'];
+            $user->save();
+
+            // Redirect to pin check
             return redirect()->route('check-pin.index')->with([
                 'success' => 'Top up berhasil',
                 'topup_id' => $existingTopUp->id
@@ -45,6 +50,10 @@ class TopUpController extends Controller
         $topup->user_id = Auth::id();
         $topup->nominal = $formattedNominal;
         $topup->save();
+
+        $user = Auth::user();
+        $user->saldo += $validatedData['nominal'];
+        $user->save();
 
         // Redirect to pin check
         return redirect()->route('check-pin.index')->with([

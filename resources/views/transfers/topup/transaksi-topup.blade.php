@@ -199,6 +199,19 @@
                             <div class="card-subtitle">Dompetku {{ Auth::user()->phone }}</div>
                         </div>
                     </div>
+                    @if(session('metode_topup'))
+                        <div class="card">
+                            <div class="card-icon">
+                                <img src="{{ session('metode_topup.icon') }}" alt="{{ session('metode_topup.nama') }} Icon" style="width: 48px; height: 48px; border-radius: 10px;">
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title">{{ session('metode_topup.nama') }}</div>
+                                <div class="card-subtitle">{{ session('metode_topup.nomor') }}</div>
+                            </div>
+                        </div>
+                    @else
+                    {{--  --}}
+                    @endif
                 </div>
 
                 <div class="amount-container">
